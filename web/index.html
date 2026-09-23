@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SHAMA WORLD</title>
+<style>
+:root{--bg:#08070d;--panel:#11101a;--card:#181622;--border:#2d2840;--text:#fff;--muted:#aaa4b8;--a:#8b5cf6;--a2:#bd7aff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#2b1649 0,#0b0910 40%,#07060a 100%);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}button{font:inherit}
+.app{width:min(100%,540px);margin:auto;padding:14px 13px 90px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.brand{font-size:22px;font-weight:950}.brand span{color:#b36cff}.balance{padding:9px 12px;border:1px solid var(--border);border-radius:14px;background:#15121f;font-weight:850}
+.hero,.card,.pack,.stat,.leader,.achievement{border:1px solid var(--border);background:linear-gradient(145deg,#171420,#111019);border-radius:21px}.hero{padding:21px;margin-bottom:10px}.eyebrow{font-size:11px;color:#bba7da;letter-spacing:1.6px;font-weight:900}.hero h1{font-size:31px;line-height:1.04;margin:7px 0}.muted{color:var(--muted);font-size:13px}.primary{border:0;border-radius:14px;background:linear-gradient(90deg,var(--a),var(--a2));color:white;font-weight:900;padding:14px;width:100%;cursor:pointer}.primary:disabled{opacity:.45}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.card{padding:14px}.stat b{font-size:20px}.section{margin-top:17px}.section h2{margin:0 0 10px;font-size:19px}.packs{display:grid;gap:9px}.pack{padding:15px}.pack-top{display:flex;justify-content:space-between;gap:10px}.price{font-weight:900;color:#d2baff}.pack button{margin-top:12px}.case{height:255px;position:relative;overflow:hidden;border-radius:24px;border:1px solid #49385f;background:radial-gradient(circle,#2c1949,#111019 65%);display:flex;align-items:center;justify-content:center}.box{width:170px;height:135px;border-radius:22px;background:linear-gradient(145deg,#ad70ff,#5121a8);border:2px solid #dec5ff;display:flex;align-items:center;justify-content:center;font-size:45px;box-shadow:0 0 55px #a25cff55}.case.opening .box{animation:shake .11s infinite,zoom 1.5s ease-in-out}.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}.case.reveal .flash{animation:flash .7s}.reward{display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;text-align:center}.case.reveal .reward{display:flex;animation:pop .55s ease}.rarity{font-size:12px;letter-spacing:2px;color:#d4c3f7;font-weight:950}.item{font-size:27px;font-weight:950;margin:8px}.value{color:#cbb4f3;font-weight:800}@keyframes shake{0%,100%{transform:rotate(0) translateX(0)}50%{transform:rotate(4deg) translateX(8px)}}@keyframes zoom{0%{scale:1}65%{scale:1.15}100%{scale:.2;opacity:0}}@keyframes flash{0%{opacity:0}35%{opacity:.95}100%{opacity:0}}@keyframes pop{from{scale:.45;opacity:0}to{scale:1;opacity:1}}
+.list{display:grid;gap:8px}.row{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--border);border-radius:15px;background:var(--card)}.pill{font-size:11px;padding:5px 8px;background:#291a40;border-radius:8px;color:#d3c0f2}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;position:fixed;bottom:8px;left:50%;transform:translateX(-50%);width:min(calc(100% - 20px),520px);padding:7px;background:#0d0b13e8;border:1px solid var(--border);border-radius:19px;backdrop-filter:blur(12px);z-index:5}.tabs button{border:0;background:transparent;color:#a9a2b8;padding:9px 2px;border-radius:12px;font-size:11px}.tabs button.active{background:#26183b;color:white}.toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:20;background:#20172e;border:1px solid #584172;padding:10px 14px;border-radius:13px;display:none;font-weight:800}
+@media(max-width:370px){.hero h1{font-size:27px}.box{width:145px;height:120px}.case{height:225px}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<main class="app">
+<header class="top"><div class="brand">SHAMA <span>WORLD</span></div><div class="balance">💰 <span id="bal">—</span> CW</div></header>
+
+<section id="home">
+<div class="hero"><div class="eyebrow">SHAMA WORLD</div><h1>Твоя игровая<br>коллекция.</h1><p class="muted">Зарабатывай CW, открывай паки, собирай предметы и прокачивай уровень.</p><button class="primary" onclick="go('packs')">🎁 К ПАКАМ</button></div>
+<div class="grid"><div class="card stat"><div class="muted">Уровень</div><b id="level">—</b></div><div class="card stat"><div class="muted">XP</div><b id="xp">—</b></div><div class="card stat"><div class="muted">Паков</div><b id="packs">—</b></div><div class="card stat"><div class="muted">Коллекция</div><b id="items">—</b></div></div>
+<div class="section"><h2>🎁 Сегодня</h2><div class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><div><b>Ежедневная награда</b><div class="muted">Серия увеличивает награду</div></div><button class="primary" style="width:auto;padding:11px 13px" onclick="bonus()">ЗАБРАТЬ</button></div></div></div>
+</section>
+
+<section id="packs" hidden><div class="section"><h2>🎁 Игровые паки</h2><p class="muted">Каждый пак содержит гарантированную награду. Без ставок и реальных денег.</p></div><div class="packs" id="packList"></div></section>
+
+<section id="opening" hidden><div class="section"><h2>🎁 Открытие</h2></div><div class="case" id="case"><div class="box">?</div><div class="flash"></div><div class="reward"><div class="rarity" id="rr"></div><div class="item" id="ri"></div><div class="value" id="rv"></div></div></div><p class="muted" id="openText" style="text-align:center">Нажми на пак, чтобы начать.</p></section>
+
+<section id="inventory" hidden><div class="section"><h2>🎒 Инвентарь</h2></div><div class="list" id="inv"></div></section>
+
+<section id="earn" hidden><div class="section"><h2>💰 Заработок</h2></div><div class="card"><b>Ежедневная награда</b><p class="muted">Забирай CW каждый день. Серия входов увеличивает награду.</p><button class="primary" onclick="bonus()">🎁 ЗАБРАТЬ</button></div><div class="section"><h2>🎯 Задания</h2><div class="card"><b>Коллекционер</b><p class="muted">Собери 5 разных предметов и получи достижение.</p></div></div></section>
+
+<section id="rating" hidden><div class="section"><h2>🏆 Рейтинг</h2></div><div class="list" id="leaders"></div></section>
+<section id="profile" hidden><div class="section"><h2>👤 Профиль</h2></div><div class="grid" id="profileGrid"></div><div class="section"><h2>🏅 Достижения</h2><div class="list" id="ach"></div></div></section>
+
+<nav class="tabs"><button class="active" data-page="home">⌂<br>Главная</button><button data-page="packs">🎁<br>Паки</button><button data-page="inventory">🎒<br>Инвентарь</button><button data-page="earn">💰<br>Заработать</button></nav>
+</main>
+<script>
+const $=id=>document.getElementById(id), money=n=>Number(n||0).toLocaleString('ru-RU').replace(/\u00a0/g,' ');
+let data=null, packs={};
+function tgHeaders(){return {'Content-Type':'application/json','X-Telegram-Init-Data':window.Telegram?.WebApp?.initData||''};}
+async function api(path,opt={}){let r=await fetch(path,{...opt,headers:{...tgHeaders(),...(opt.headers||{})}});let j=await r.json();if(!r.ok)throw j;return j;}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2300);}
+function go(page){document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!==page);document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='inventory')loadInv();if(page==='rating')loadRating();if(page==='profile')loadProfile();}
+function render(){const s=data.stats;$('bal').textContent=money(s.balance);$('level').textContent=s.level;$('xp').textContent=money(s.xp);$('packs').textContent=s.packs;$('items').textContent=s.items;renderPacks();}
+function renderPacks(){const el=$('packList');el.innerHTML='';Object.entries(packs).forEach(([key,p])=>{const d=document.createElement('div');d.className='pack';d.innerHTML=`<div class="pack-top"><div><b>${p.name}</b><div class="muted">⭐ +${p.xp} XP · гарантированная награда</div></div><div class="price">${money(p.price)} CW</div></div><button class="primary">ОТКРЫТЬ</button>`;d.querySelector('button').onclick=()=>openPack(key);el.appendChild(d);});}
+async function load(){try{const j=await api('/api/me');data=j;packs=j.packs;render();}catch(e){toast('Открой Mini App через Telegram');}}
+async function bonus(){try{const j=await api('/api/bonus',{method:'POST'});toast(`🎉 +${money(j.reward)} CW`);await load();}catch(e){toast(e.reason==='already'?'🎁 Бонус уже получен сегодня':'Ошибка бонуса');}}
+async function openPack(key){$('opening').hidden=false;go('opening');const c=$('case');c.classList.remove('reveal');c.classList.add('opening');$('openText').textContent='Открываем…';try{const j=await api('/api/open-pack',{method:'POST',body:JSON.stringify({pack:key})});setTimeout(()=>{c.classList.remove('opening');$('rr').textContent=j.item.emoji+' '+j.item.rarity;$('ri').textContent=j.item.name;$('rv').textContent=money(j.item.value)+' CW';c.classList.add('reveal');$('openText').textContent='🎉 Предмет добавлен в коллекцию!';data.stats.balance=j.balance;data.stats.xp=j.xp;data.stats.level=j.level;data.stats.packs++;data.stats.items++;render();if(j.achievements?.length)toast('🏆 Новое достижение!');},1450);}catch(e){c.classList.remove('opening');go('packs');toast(e.reason==='money'?`Не хватает ${money(e.need)} CW`:'Не удалось открыть пак');}}
+async function loadInv(){const j=await api('/api/inventory');$('inv').innerHTML=j.items.length?j.items.map(x=>`<div class="row"><div><b>${x.emoji} ${x.name}</b><div class="muted">${x.rarity} · ${money(x.value)} CW</div></div><span class="pill">×${x.quantity}</span></div>`).join(''):'<div class="card"><b>Пока пусто</b><div class="muted">Открой первый пак.</div></div>';}
+async function loadRating(){const j=await api('/api/leaderboard');$('leaders').innerHTML=j.items.map((x,i)=>`<div class="leader row"><div><b>${i+1}. ${x.first_name||'Player'}</b><div class="muted">Level ${x.level} · ${x.packs_opened} паков</div></div><span class="pill">${money(x.balance)} CW</span></div>`).join('');}
+async function loadProfile(){const s=data.stats;$('profileGrid').innerHTML=`<div class="card"><div class="muted">Уровень</div><b>${s.level}</b></div><div class="card"><div class="muted">Серия</div><b>🔥 ${s.streak}</b></div><div class="card"><div class="muted">Коллекция</div><b>${s.unique}</b></div><div class="card"><div class="muted">Стоимость</div><b>${money(s.inventory_value)}</b></div>`;const j=await api('/api/achievements');$('ach').innerHTML=j.items.length?j.items.map(x=>`<div class="achievement row"><div><b>🏆 ${x.title}</b><div class="muted">Награда: ${money(x.reward)} CW</div></div></div>`).join(''):'<div class="card">Пока нет достижений.</div>';}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+if(window.Telegram?.WebApp){Telegram.WebApp.ready();Telegram.WebApp.expand();}
+load();
+</script>
+</body>
+</html>
