@@ -1,0 +1,20 @@
+SHAMA WORLD — CORE BUILD AUDIT
+
+Base: uploaded SHAMA_WORLD_v13.2_TELEGRAM_AUTH_FIXED_RENDER_READY
+Build: CORE / inventory sell
+
+Checks:
+- Python compile: database.py, api_server.py, bot.py, config.py — PASS
+- JavaScript node --check — PASS
+- Telegram WebApp SDK present — PASS
+- /api/inventory/sell route — PASS
+- Inventory sale database smoke test — PASS
+- Market-reserved item cannot be sold — enforced server-side
+- Sale writes transaction history and grants XP — PASS
+- ZIP integrity — checked after creation
+
+Changes:
+- Added server-side instant inventory sale at 70% of base item value.
+- Added quantity validation and Market reservation protection.
+- Added inventory UI button ПРОДАТЬ.
+- Added confirmation and sale result feedback.
