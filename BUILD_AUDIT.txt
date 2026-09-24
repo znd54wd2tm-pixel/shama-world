@@ -1,0 +1,24 @@
+SHAMA WORLD V16 — MAX UI / ECONOMY AUDIT
+
+Base: V15 MAXIMIZED
+
+V16 changes:
+- inventory cards upgraded with rarity-specific visual art, value chips, serial labels and available quantity
+- inventory now accounts for Market reservations when showing available quantity
+- upgrade item selector uses full visual cards
+- upgrade modal redesigned with source/target comparison, chance bar, risk badge and enhanced wheel presentation
+- upgrade result remains server-authoritative
+- Telegram Mini App SDK preserved
+- no prompt() dialogs in inventory selling or market listing flows
+
+Validation performed:
+- Python syntax compilation: PASS
+- JavaScript syntax check: PASS
+- ZIP integrity: PASS
+- database initialization: PASS
+- case catalog loaded: PASS
+- starter-case simulation and pending-drop claim: PASS
+- inventory/market reservation display logic: PASS
+
+Known design note:
+- Item artwork is currently UI-rendered using the item's configured emoji plus rarity-specific visual treatment; dedicated image assets can be added later without changing the economy/API.
