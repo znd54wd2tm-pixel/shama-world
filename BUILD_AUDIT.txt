@@ -1,0 +1,35 @@
+SHAMA WORLD — V14.1 FINAL BUILD AUDIT
+
+Base: SHAMA_WORLD_CASE_UPGRADE_V14_AUDITED
+Build: V14.1 / case + inventory + market + upgrade hardening
+
+Checks:
+- Python compile: database.py, api_server.py, bot.py, config.py — PASS
+- JavaScript node --check — PASS
+- Telegram WebApp SDK present — PASS
+- Telegram init-data authentication route — PASS
+- /api/inventory/sell — PASS
+- /api/pending-drops — PASS
+- Pending drop save/upgrade flow — PASS
+- Pending drop recovery after reload — PASS
+- Case server-side drop selection — PASS
+- Case double-open guard — PASS
+- Inventory quantity sale — PASS
+- Market listing quantity/price modal — PASS
+- Market reservation protection — PASS
+- Upgrade server-side chance/result — PASS
+- Upgrade wheel UI — PASS
+- Farm/collections/profile/history routes retained — PASS
+- Database smoke tests — PASS
+
+Changes in V14.1:
+- Fixed pending drop ID handling in the Mini App.
+- Added recovery of unclaimed case drops after reload.
+- Item drops now remain pending until the player explicitly chooses SAVE or UPGRADE.
+- The post-drop “open another case” actions appear only after the item is claimed.
+- Removed browser prompt() from Market listing; price and quantity are entered in the Mini App.
+- Added Market quantity selector and total listing price UI.
+- Added server validation for pending-drop actions.
+- Added case-opening double-submit protection.
+- Added sale/market double-submit protection.
+- Updated build/version documentation.
