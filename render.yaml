@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: shama-world-web
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.routes:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBAPP_URL
+        sync: false
+      - key: DATABASE_PATH
+        value: shama_world.db
+
+  - type: worker
+    name: shama-world-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBAPP_URL
+        sync: false
+      - key: DATABASE_PATH
+        value: shama_world.db
