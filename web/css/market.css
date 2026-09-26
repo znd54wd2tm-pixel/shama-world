@@ -1,0 +1,1 @@
+.market-offers{grid-template-columns:repeat(2,minmax(0,1fr))}.market-offer{border-color:#c395ff3d;background:linear-gradient(145deg,#2a1a45,#130d21);box-shadow:0 12px 30px #0004}.market-offer:hover{box-shadow:0 0 26px #a66bff3d}@media(max-width:420px){.market-offers{grid-template-columns:1fr}}
