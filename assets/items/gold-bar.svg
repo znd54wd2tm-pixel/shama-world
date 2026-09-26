@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22143a"/><stop offset=".55" stop-color="#0d0916"/><stop offset="1" stop-color="#160d25"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".25" stop-color="#d7b5ff"/><stop offset=".6" stop-color="#8e5bd2"/><stop offset="1" stop-color="#2b173e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#b978ff" stop-opacity=".38"/><stop offset="1" stop-color="#b978ff" stop-opacity="0"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="640" height="640" rx="42" fill="url(#bg)"/>
+<circle cx="510" cy="110" r="170" fill="url(#glow)" filter="url(#soft)"/>
+<ellipse cx="320" cy="500" rx="220" ry="55" fill="#000" opacity=".45" filter="url(#soft)"/>
+<g filter="url(#shadow)"><path d="M170 365 L230 240 L480 250 L540 365 L480 445 L220 435 Z" fill="#c89424" stroke="#ffe39a" stroke-width="7"/><path d="M230 240 L285 190 L520 205 L480 250Z" fill="#f6d56b"/><path d="M480 250 L520 205 L540 365 L480 445Z" fill="#9f6b16"/><path d="M210 355 L490 355" stroke="#fff0ad" stroke-width="9" opacity=".55"/><text x="330" y="335" text-anchor="middle" fill="#fff4c7" font-size="58" font-weight="900">AU</text></g>
+<text x="42" y="555" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="31" font-weight="800">GOLD BAR</text>
+<text x="42" y="590" fill="#b978ff" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">GOLD • RARE</text>
+</svg>

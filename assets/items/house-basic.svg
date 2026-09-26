@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22143a"/><stop offset=".55" stop-color="#0d0916"/><stop offset="1" stop-color="#160d25"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".25" stop-color="#d7b5ff"/><stop offset=".6" stop-color="#8e5bd2"/><stop offset="1" stop-color="#2b173e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#b978ff" stop-opacity=".38"/><stop offset="1" stop-color="#b978ff" stop-opacity="0"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="640" height="640" rx="42" fill="url(#bg)"/>
+<circle cx="510" cy="110" r="170" fill="url(#glow)" filter="url(#soft)"/>
+<ellipse cx="320" cy="500" rx="220" ry="55" fill="#000" opacity=".45" filter="url(#soft)"/>
+<g filter="url(#shadow)"><path d="M150 315 L335 180 L520 315 V480 H150Z" fill="#5d4a73" stroke="#d7b5ff" stroke-width="7"/><path d="M120 320 L335 145 L550 320 L520 345 L335 205 L150 345Z" fill="#d7b5ff"/><rect x="285" y="355" width="100" height="125" rx="12" fill="#16101f" stroke="#fff" stroke-opacity=".35" stroke-width="6"/><rect x="185" y="340" width="72" height="65" rx="8" fill="#91dfff" opacity=".7"/><rect x="413" y="340" width="72" height="65" rx="8" fill="#91dfff" opacity=".7"/><circle cx="335" cy="285" r="32" fill="#b978ff" opacity=".75"/></g>
+<text x="42" y="555" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="31" font-weight="800">CITY HOUSE</text>
+<text x="42" y="590" fill="#b978ff" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">HOME • COMMON</text>
+</svg>
