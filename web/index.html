@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08060f" />
+  <title>SHAMA WORLD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/upgrade.css" />
+  <link rel="stylesheet" href="/css/nav.css" />
+  <link rel="stylesheet" href="/css/economy.css" />
+  <link rel="stylesheet" href="/css/earnings.css" />
+  <link rel="stylesheet" href="/css/market.css" />
+  <link rel="stylesheet" href="/css/world.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <link rel="stylesheet" href="/css/premium.css" />
+  <link rel="stylesheet" href="/css/premium_v3.css" />
+  <link rel="stylesheet" href="/css/v4_game.css" />
+  <link rel="stylesheet" href="/css/v5_city.css" />
+  <link rel="stylesheet" href="/css/v6_world_upgrade.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="ambient-bg" aria-hidden="true"><span class="ambient-orb orb-a"></span><span class="ambient-orb orb-b"></span><span class="ambient-grid"></span></div>
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-mark">S</div>
+    <strong>SHAMA WORLD</strong>
+    <span>Loading<span class="loading-dots">...</span></span>
+  </div>
+
+  <div id="error-screen" class="error-screen is-hidden">
+    <div class="error-icon">!</div>
+    <h1>SHAMA WORLD</h1>
+    <p id="error-message">Не удалось подключиться к SHAMA WORLD.</p>
+    <button id="retry-button" class="button button-primary">ПОВТОРИТЬ</button>
+  </div>
+
+  <main id="app" class="app-shell is-hidden">
+    <header class="topbar premium-header">
+      <button class="brand-lockup brand-button" type="button" data-nav="world" aria-label="SHAMA WORLD">
+        <span class="brand-symbol">S</span>
+        <span class="brand-copy"><span class="eyebrow">SHAMA</span><span class="brand-title">WORLD</span></span>
+      </button>
+      <div class="topbar-actions">
+        <button id="global-balance" class="balance-chip balance-button" type="button" data-nav="profile">◈ — SH</button>
+        <button id="profile-avatar" class="avatar avatar-button" type="button" data-nav="profile">SW</button>
+      </div>
+    </header>
+
+    <div class="app-content">
+      <section id="page-world" class="page is-active">
+        <div class="world3d-topbar">
+          <div><p class="eyebrow accent">SHAMA WORLD · OPEN CITY</p><h1>Город живёт вместе с тобой.</h1><p class="muted">Свайпай, чтобы осматривать город. Нажми на район — и отправляйся туда.</p></div>
+          <div class="world3d-stats"><span id="profile-level">LVL —</span><span id="profile-balance">— SH</span></div>
+        </div>
+        <div id="world3d-viewport" class="world3d-viewport" aria-label="Интерактивный 3D город SHAMA WORLD">
+          <div class="world3d-scene" id="world3d-scene">
+            <div class="world3d-photo" aria-hidden="true"></div>
+            <div class="world3d-vignette" aria-hidden="true"></div>
+            <button class="world-hotspot hotspot-stadium" type="button" data-world-nav="earn"><span class="hotspot-building stadium-building"><i></i><b>TORPEDO</b><small>STADIUM</small></span><em>СТАДИОН</em></button>
+            <button class="world-hotspot hotspot-market" type="button" data-world-nav="market"><span class="hotspot-building market-building"><i></i><b>SH</b><small>MARKET</small></span><em>РЫНОК</em></button>
+            <button class="world-hotspot hotspot-courier" type="button" data-world-mission="courier"><span class="hotspot-building courier-building"><i></i><b>COURIER</b><small>HUB</small></span><em>ДОСТАВКА</em></button>
+            <button class="world-hotspot hotspot-factory" type="button" data-world-mission="case_factory"><span class="hotspot-building factory-building"><i></i><b>CASE</b><small>FACTORY</small></span><em>ФАБРИКА</em></button>
+            <button class="world-hotspot hotspot-bank" type="button" data-world-nav="earn"><span class="hotspot-building bank-building"><i></i><b>SHAMA</b><small>BANK</small></span><em>БАНК</em></button>
+            <button class="world-hotspot hotspot-secret" type="button" data-world-mission="case_hunt"><span class="hotspot-building secret-building"><i>?</i><b>SECRET</b><small>DISTRICT</small></span><em>СЕКРЕТНЫЙ РАЙОН</em></button>
+            <div class="world3d-road road-a"></div><div class="world3d-road road-b"></div><div class="world3d-road road-c"></div>
+            <div class="world3d-player"><i></i><span>ТЫ</span></div><div class="world3d-car"></div>
+          </div>
+          <div class="world3d-controls"><button type="button" id="world3d-reset">↺</button><span>SWIPE TO EXPLORE</span><button type="button" id="world3d-zoom-in">+</button><button type="button" id="world3d-zoom-out">−</button></div>
+          <div class="world3d-hint">Проведи пальцем по городу</div>
+        </div>
+        <div class="world-dashboard card">
+          <div class="world-dashboard-head"><div><p class="eyebrow">PLAYER HUB</p><h2 id="welcome-name">Игрок</h2><span class="muted" id="profile-full-name">Твоя история начинается здесь.</span></div><button class="button button-secondary" type="button" data-nav="profile">ПРОФИЛЬ →</button></div>
+          <div class="world-dashboard-grid"><div><span>XP</span><b id="profile-xp">—</b></div><div><span>КЕЙСЫ</span><b id="profile-stat-cases">—</b></div><div><span>ПРЕДМЕТЫ</span><b id="profile-stat-collected">—</b></div></div>
+          <div class="progress premium-progress"><span id="xp-progress"></span></div>
+        </div>
+        <div class="v6-compat" aria-hidden="true"><span id="profile-username"></span><span id="profile-avatar-large"></span><span id="profile-xp-label"></span></div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">CITY DISTRICTS</p><h2>Локации</h2></div><span class="badge badge-muted">6 ACTIVE</span></div>
+        <div id="world-locations" class="world-locations world-locations-v6"></div>
+      </section>
+      <section id="page-cases" class="page">
+        <div class="page-heading"><div><p class="eyebrow accent">CASE COLLECTION</p><h1>Кейсы</h1></div><span id="cases-balance" class="balance-chip">— SH</span></div>
+        <p class="muted page-lead">Открывай кейсы и собирай предметы SHAMA WORLD.</p>
+        <div class="collection-toolbar"><span>ALL CASES</span><span id="cases-count" class="toolbar-count">—</span></div>
+        <div id="cases-grid" class="cases-grid"></div>
+      </section>
+
+      <section id="page-earn" class="page">
+        <div class="page-heading"><div><p class="eyebrow accent">SH ECONOMY</p><h1>Заработок</h1></div><span id="earnings-balance" class="balance-chip">◈ — SH</span></div>
+        <p class="muted page-lead">Развивай источники SH и выполняй задания города.</p>
+        <div id="passive-grid" class="passive-grid"></div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">CITY JOBS</p><h2>Работы</h2></div></div>
+        <div id="jobs-grid" class="jobs-grid"></div>
+        <div id="active-job" class="active-job card is-hidden"></div>
+      </section>
+
+      <section id="page-inventory" class="page">
+        <div class="page-heading"><div><p class="eyebrow accent">YOUR COLLECTION</p><h1>Инвентарь</h1></div><div class="page-balance-stack"><span id="inventory-balance" class="balance-chip">◈ — SH</span><span id="inventory-count" class="badge badge-muted">0 предметов</span></div></div>
+        <div class="inventory-toolbar"><div class="filter-row inventory-filters"><button class="filter-button is-active" data-inventory-filter="ALL">ВСЕ</button><button class="filter-button" data-inventory-filter="COMMON">COMMON</button><button class="filter-button" data-inventory-filter="UNCOMMON">UNCOMMON</button><button class="filter-button" data-inventory-filter="RARE">RARE</button><button class="filter-button" data-inventory-filter="EPIC">EPIC</button><button class="filter-button" data-inventory-filter="LEGENDARY">LEGENDARY</button><button class="filter-button" data-inventory-filter="MYTHIC">MYTHIC</button></div></div>
+        <div id="inventory-grid" class="inventory-grid"></div>
+        <div id="inventory-empty" class="empty-state is-hidden"><div class="empty-icon">◇</div><h2>Инвентарь пуст</h2><p class="muted">Открой первый кейс, чтобы получить предмет.</p><button class="button button-primary" data-nav="cases">ОТКРЫТЬ КЕЙС</button></div>
+      </section>
+
+      <section id="page-upgrade" class="page">
+        <div class="page-heading"><div><p class="eyebrow accent">RISK & REWARD</p><h1>Апгрейд</h1></div><span id="upgrade-balance" class="balance-chip">◈ — SH</span></div>
+        <p class="muted page-lead">Выбери предмет и попробуй получить более редкий.</p>
+        <div class="upgrade-layout">
+          <button id="upgrade-source-card" class="upgrade-slot card" data-upgrade-source="true"><span class="slot-label">MY ITEM</span><span class="slot-empty">Выбери предмет</span></button>
+          <div class="upgrade-center"><div class="upgrade-wheel-shell-v6"><div id="upgrade-wheel" class="upgrade-wheel upgrade-wheel-v6"><div id="upgrade-success-sector" class="success-sector"></div><div class="wheel-grid-v6"></div><div class="wheel-label success-label">SUCCESS</div><div class="wheel-label fail-label">RISK</div><div id="upgrade-pointer" class="upgrade-pointer upgrade-pointer-v6"><span></span></div><div class="wheel-center"><b id="upgrade-wheel-chance">—</b><small>CHANCE</small></div></div><div class="upgrade-wheel-status" id="upgrade-wheel-status">Выбери предмет и цель</div></div><div class="chance-caption">SUCCESS CHANCE<strong id="upgrade-chance">—</strong></div><div class="chance-bar"><span id="upgrade-chance-bar"></span></div><button id="upgrade-button" class="button button-primary upgrade-button" disabled>UPGRADE</button></div>
+          <button id="upgrade-target-card" class="upgrade-slot card" data-upgrade-target="true"><span class="slot-label">TARGET</span><span class="slot-empty">Выбери цель</span></button>
+        </div>
+        <div class="recommended-block"><div class="section-heading compact-heading"><div><p class="eyebrow">SMART PICKS</p><h2>Рекомендуемые цели</h2></div></div><div id="upgrade-recommendations" class="recommendations"><p class="muted">Сначала выбери исходный предмет.</p></div></div>
+        <div class="upgrade-inventory-block"><div class="section-heading compact-heading"><div><p class="eyebrow">YOUR ITEMS</p><h2>Твои предметы</h2></div></div><div id="upgrade-inventory-grid" class="inventory-grid"></div><div id="upgrade-inventory-empty" class="empty-state is-hidden"><div class="empty-icon">◇</div><h2>Коллекция пуста</h2><p class="muted">Открой кейс, чтобы получить предмет.</p><button class="button button-secondary" data-nav="cases">К КЕЙСАМ</button></div></div>
+        <div class="upgrade-history-block"><div class="section-heading compact-heading"><div><p class="eyebrow">LAST MOVES</p><h2>История апгрейдов</h2></div></div><div id="upgrade-history" class="upgrade-history"><p class="muted">История пока пуста.</p></div></div>
+      </section>
+
+      <section id="page-market" class="page">
+        <div class="page-heading"><div><p class="eyebrow accent">NPC MARKET</p><h1>SH Market</h1></div><span id="market-balance" class="balance-chip">◈ — SH</span></div>
+        <p class="muted page-lead">Ассортимент обновляется раз в четыре часа.</p>
+        <div class="market-controls"><div class="market-search"><span>⌕</span><input id="market-search" type="search" placeholder="Поиск предмета" autocomplete="off" /></div><select id="market-sort" class="sort-select"><option value="default">Рекомендуемые</option><option value="price-asc">Цена ↑</option><option value="price-desc">Цена ↓</option></select></div>
+        <div id="market-timer" class="market-timer card">NEXT REFRESH</div>
+        <div id="market-offers" class="market-offers"></div>
+      </section>
+
+      <section id="page-profile" class="page profile-page">
+        <div class="profile-hero card">
+          <div class="profile-hero-top"><div class="avatar profile-avatar-xl" id="profile-page-avatar">SW</div><div class="profile-hero-copy"><p class="eyebrow accent">PLAYER PROFILE</p><h1 id="profile-page-username">@player</h1><p id="profile-page-full-name" class="muted">Игрок SHAMA</p></div><span class="badge">LEVEL <span id="profile-page-level">—</span></span></div>
+          <div class="profile-balance-line"><span>SH BALANCE</span><strong id="profile-page-balance">— SH</strong></div>
+          <div class="progress premium-progress"><span id="profile-page-progress"></span></div>
+          <div class="profile-xp-line"><span>XP</span><strong id="profile-page-xp">— / 100</strong></div>
+        </div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">OVERVIEW</p><h2>Статистика</h2></div></div>
+        <div id="profile-page-stats" class="profile-stats-grid">
+          <div class="profile-stat-card card"><span>CASES OPENED</span><strong id="profile-stat-cases">0</strong></div>
+          <div class="profile-stat-card card"><span>ITEMS</span><strong id="profile-stat-collected">0</strong></div>
+          <div class="profile-stat-card card"><span>UPGRADES</span><strong id="profile-stat-upgrades">0</strong></div>
+          <div class="profile-stat-card card"><span>ITEMS SOLD</span><strong id="profile-stat-sold">0</strong></div>
+          <div class="profile-stat-card card"><span>SH FROM SALES</span><strong id="profile-stat-earned">0 SH</strong></div>
+          <div class="profile-stat-card card"><span>SH SPENT</span><strong id="profile-stat-spent">0 SH</strong></div>
+          <div class="profile-stat-card card"><span>SUCCESS RATE</span><strong id="profile-stat-success-rate">0%</strong></div>
+          <div class="profile-stat-card card"><span>ECONOMY</span><strong id="profile-stat-passive">1 / 0 / 0</strong></div>
+        </div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">DAILY REWARD</p><h2>Ежедневный бонус</h2></div></div>
+        <div class="daily-card card"><div><span class="daily-icon">◈</span><div><b>+100 SH</b><small>Каждые 24 часа</small></div></div><button class="button button-primary" id="daily-claim-button">CLAIM 100 SH</button></div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">ACHIEVEMENTS</p><h2>Достижения</h2></div></div>
+        <div id="profile-achievements-list" class="profile-achievements-list"></div>
+        <div class="section-heading compact-heading"><div><p class="eyebrow">HISTORY</p><h2>Транзакции</h2></div></div>
+        <div id="transactions-list" class="transactions-list"></div>
+      </section>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item is-active" data-nav="world"><span class="nav-icon">⌂</span><span>МИР</span></button>
+      <button class="nav-item" data-nav="cases"><span class="nav-icon">◇</span><span>КЕЙСЫ</span></button>
+      <button class="nav-item" data-nav="earn"><span class="nav-icon">↗</span><span>ЗАРАБОТОК</span></button>
+      <button class="nav-item" data-nav="inventory"><span class="nav-icon">▦</span><span>ИНВЕНТАРЬ</span></button>
+      <button class="nav-item" data-nav="upgrade"><span class="nav-icon">⇧</span><span>АПГРЕЙД</span></button>
+      <button class="nav-item" data-nav="market"><span class="nav-icon">$</span><span>РЫНОК</span></button>
+      <button class="nav-item" data-nav="profile"><span class="nav-icon">◯</span><span>ПРОФИЛЬ</span></button>
+    </nav>
+  </main>
+
+  <div id="case-modal" class="modal-backdrop is-hidden"><div class="modal case-modal"><button class="modal-close" data-close-modal="case-modal">×</button><img id="case-detail-image" class="case-detail-image" alt="" /><div class="modal-eyebrow">CASE</div><h2 id="case-detail-name"></h2><p id="case-detail-description" class="muted"></p><div class="case-price-row"><strong id="case-detail-price"></strong><button class="info-button" data-action="chances" title="Показать шансы">ⓘ</button></div><button id="open-case-button" class="button button-primary open-case-button">ОТКРЫТЬ</button></div></div>
+  <div id="chances-modal" class="modal-backdrop is-hidden"><div class="modal chances-modal"><button class="modal-close" data-close-modal="chances-modal">×</button><div class="modal-eyebrow">DROP TABLE</div><h2>Шансы</h2><div id="chances-list" class="chances-list"></div></div></div>
+  <div id="opening-modal" class="modal-backdrop is-hidden"><div class="modal opening-modal"><div id="opening-stage" class="opening-stage"><div class="opening-kicker">OPENING CASE</div><div class="opening-ring ring-one"></div><div class="opening-ring ring-two"></div><img id="opening-case-image" alt="" /><span class="opening-spark spark-one"></span><span class="opening-spark spark-two"></span><span class="opening-spark spark-three"></span><div class="opening-progress"><span></span></div><div class="opening-status">РАСПАКОВКА<span class="loading-dots">...</span></div></div><div id="opening-result" class="opening-result is-hidden"><div class="modal-eyebrow">ТЫ ПОЛУЧИЛ</div><img id="result-image" class="result-image" alt="" /><h2 id="result-name"></h2><span id="result-rarity" class="rarity-label"></span><p class="result-value">VALUE: <strong id="result-value"></strong> SH</p><button id="saved-button" class="button button-primary">СОХРАНЕНО В ИНВЕНТАРЬ</button></div></div></div>
+  <div id="item-modal" class="modal-backdrop is-hidden"><div class="modal item-modal"><button class="modal-close" data-close-modal="item-modal">×</button><img id="item-detail-image" class="item-detail-image" alt="" /><h2 id="item-detail-name"></h2><span id="item-detail-rarity" class="rarity-label"></span><div class="item-detail-stats"><span>VALUE <strong id="item-detail-value"></strong> SH</span><span>QUANTITY <strong id="item-detail-quantity"></strong></span></div><p id="item-detail-description" class="muted"></p><div class="future-actions"><button class="button button-secondary" data-action="sell-item">ПРОДАТЬ</button><button class="button button-primary" data-action="upgrade-item">АПГРЕЙД</button></div></div></div>
+  <div id="sell-modal" class="modal-backdrop is-hidden"><div class="modal sell-modal"><button class="modal-close" data-close-modal="sell-modal">×</button><div class="modal-eyebrow">SELL ITEM</div><img id="sell-image" class="item-detail-image" alt="" /><h2 id="sell-name"></h2><div id="sell-price" class="sell-unit-price"></div><div class="quantity-label">QUANTITY</div><div class="quantity-control"><button id="sell-minus" type="button">−</button><input id="sell-quantity" type="number" min="1" step="1" value="1" inputmode="numeric" /><button id="sell-plus" type="button">+</button></div><button id="sell-max" type="button" class="max-button">MAX</button><div class="sell-total"><span>TOTAL</span><strong id="sell-total-value">0 SH</strong></div><div class="future-actions"><button class="button button-secondary" data-close-modal="sell-modal">CANCEL</button><button id="confirm-sell-button" class="button button-primary">SELL</button></div></div></div>
+  <div id="upgrade-source-modal" class="modal-backdrop is-hidden"><div class="modal picker-modal"><button class="modal-close" data-close-modal="upgrade-source-modal">×</button><div class="modal-eyebrow">SOURCE</div><h2>Выбери предмет</h2><div id="upgrade-source-picker" class="picker-grid"></div></div></div>
+  <div id="upgrade-target-modal" class="modal-backdrop is-hidden"><div class="modal picker-modal"><button class="modal-close" data-close-modal="upgrade-target-modal">×</button><div class="modal-eyebrow">TARGET</div><h2>Выбери цель</h2><div class="filter-row"><button class="filter-button is-active" data-rarity-filter="ALL">ALL</button><button class="filter-button" data-rarity-filter="COMMON">COMMON</button><button class="filter-button" data-rarity-filter="UNCOMMON">UNCOMMON</button><button class="filter-button" data-rarity-filter="RARE">RARE</button><button class="filter-button" data-rarity-filter="EPIC">EPIC</button><button class="filter-button" data-rarity-filter="LEGENDARY">LEGENDARY</button><button class="filter-button" data-rarity-filter="MYTHIC">MYTHIC</button></div><select id="target-sort" class="sort-select"><option value="asc">PRICE LOW → HIGH</option><option value="desc">PRICE HIGH → LOW</option></select><div id="upgrade-target-picker" class="picker-grid"></div></div></div>
+  <div id="upgrade-confirm-modal" class="modal-backdrop is-hidden"><div class="modal confirm-modal"><button class="modal-close" data-close-modal="upgrade-confirm-modal">×</button><div class="modal-eyebrow">FINAL CHECK</div><h2>YOU ARE RISKING</h2><div id="confirm-source" class="confirm-line"></div><div class="confirm-arrow">↓</div><div class="modal-eyebrow">FOR</div><div id="confirm-target" class="confirm-line"></div><div class="confirm-chance">SUCCESS CHANCE: <strong id="confirm-chance"></strong></div><div class="future-actions"><button class="button button-secondary" data-close-modal="upgrade-confirm-modal">CANCEL</button><button id="confirm-upgrade-button" class="button button-primary">CONFIRM UPGRADE</button></div></div></div>
+  <div id="upgrade-result-modal" class="modal-backdrop is-hidden"><div id="upgrade-result-box" class="modal upgrade-result-modal"><div id="upgrade-result-icon" class="result-icon">✓</div><div id="upgrade-result-title" class="modal-eyebrow">UPGRADE SUCCESS</div><h2 id="upgrade-result-name"></h2><div id="upgrade-result-route" class="result-route"></div><p id="upgrade-result-description" class="muted"></p><button class="button button-primary" data-close-modal="upgrade-result-modal">CONTINUE</button></div></div>
+  <div id="mission-modal" class="modal-backdrop is-hidden">
+    <div class="modal mission-modal" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close-modal="mission-modal">×</button>
+      <div class="mission-topline"><div><span id="mission-eyebrow" class="eyebrow accent">CITY MISSION</span><h2 id="mission-title">MISSION</h2></div><div class="mission-timer"><span>TIME</span><strong id="mission-time">60</strong></div></div>
+      <div id="mission-scene" class="mission-scene"></div>
+      <div class="mission-bottom"><div class="mission-progress"><span id="mission-progress-bar"></span></div><div class="mission-status"><span id="mission-status">Подготовка...</span><strong id="mission-step-count">0 / 3</strong></div></div>
+      <button id="mission-complete" class="button button-primary mission-complete" disabled>ЗАВЕРШИТЬ МИССИЮ</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast is-hidden"></div>
+  <script src="/js/api.js"></script><script src="/js/app.js"></script><script src="/js/v6.js"></script>
+</body>
+</html>
