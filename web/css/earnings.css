@@ -1,0 +1,1 @@
+.job-scene{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}.job-step{min-height:40px;padding:0 8px;font-size:9px}.job-step.is-active{border-color:#5fe1ad88;color:#5fe1ad}
