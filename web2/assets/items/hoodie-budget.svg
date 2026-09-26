@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22143a"/><stop offset=".55" stop-color="#0d0916"/><stop offset="1" stop-color="#160d25"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".25" stop-color="#d7b5ff"/><stop offset=".6" stop-color="#8e5bd2"/><stop offset="1" stop-color="#2b173e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#b978ff" stop-opacity=".38"/><stop offset="1" stop-color="#b978ff" stop-opacity="0"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="640" height="640" rx="42" fill="url(#bg)"/>
+<circle cx="510" cy="110" r="170" fill="url(#glow)" filter="url(#soft)"/>
+<ellipse cx="320" cy="500" rx="220" ry="55" fill="#000" opacity=".45" filter="url(#soft)"/>
+<g filter="url(#shadow)"><path d="M215 250 L275 205 Q335 245 395 205 L455 250 L420 330 L390 305 V470 H280 V305 L250 330Z" fill="#383143" stroke="#d6b9f4" stroke-width="7"/><path d="M275 205 Q335 300 395 205" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="9"/><text x="335" y="395" text-anchor="middle" fill="#d8baff" font-size="38" font-weight="900">SH</text></g>
+<text x="42" y="555" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="31" font-weight="800">STREET HOODIE</text>
+<text x="42" y="590" fill="#b978ff" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">CLOTHING • COMMON</text>
+</svg>

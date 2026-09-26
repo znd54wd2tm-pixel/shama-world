@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22143a"/><stop offset=".55" stop-color="#0d0916"/><stop offset="1" stop-color="#160d25"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".25" stop-color="#d7b5ff"/><stop offset=".6" stop-color="#8e5bd2"/><stop offset="1" stop-color="#2b173e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#b978ff" stop-opacity=".38"/><stop offset="1" stop-color="#b978ff" stop-opacity="0"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity=".65"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="640" height="640" rx="42" fill="url(#bg)"/>
+<circle cx="510" cy="110" r="170" fill="url(#glow)" filter="url(#soft)"/>
+<ellipse cx="320" cy="500" rx="220" ry="55" fill="#000" opacity=".45" filter="url(#soft)"/>
+<g filter="url(#shadow)"><path d="M150 380 L220 315 L330 340 L400 315 L510 385 L480 455 H185Z" fill="#f2f0f7" stroke="#d6dbe8" stroke-width="8"/><path d="M150 380 L220 315 L270 340 L215 410 H155Z" fill="#d6dbe8"/><path d="M330 340 L400 315 L510 385 L475 405 L385 370Z" fill="#1b1425"/><path d="M185 455 H480" stroke="#fff" stroke-width="16" opacity=".65"/><path d="M270 355 L300 405" stroke="#1b1425" stroke-width="9"/><text x="360" y="445" text-anchor="middle" fill="#d6dbe8" font-size="26" font-weight="900">JORDAN</text></g>
+<text x="42" y="555" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="31" font-weight="800">JORDAN 11</text>
+<text x="42" y="590" fill="#b978ff" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">SNEAKERS • LEGENDARY</text>
+</svg>
