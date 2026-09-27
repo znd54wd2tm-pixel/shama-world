@@ -1,1 +1,0 @@
-"""SHAMA WORLD application package."""
