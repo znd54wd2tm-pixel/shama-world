@@ -1,0 +1,143 @@
+/* SHAMA WORLD V11 — final black / gold / white identity layer.
+   Kept as a small override sheet so the existing UI and API renderers stay intact. */
+:root,
+html[data-theme="dark"] {
+  --accent: #c49a4a;
+  --accent-2: #f2d58d;
+  --pink: #e8debd;
+  --sw-accent: #c49a4a;
+  --sw-accent-2: #f2d58d;
+  --sw-pink: #e8debd;
+  --gold: #d8b25e;
+  --gold-bright: #ffe4a0;
+  --bg: #0b0b0a;
+  --surface: #151513;
+  --surface-2: #1d1c18;
+  --surface-3: #25231d;
+  --text: #f7f4ea;
+  --muted: #aaa28e;
+  --line: rgba(195, 157, 82, .2);
+  --line-strong: rgba(224, 188, 106, .48);
+}
+
+html[data-theme="white"] {
+  --accent: #b1873b;
+  --accent-2: #79591e;
+  --pink: #8d7132;
+  --sw-accent: #b1873b;
+  --sw-accent-2: #79591e;
+  --sw-pink: #8d7132;
+  --gold: #b1873b;
+  --gold-bright: #79591e;
+  --bg: #f5f3ed;
+  --surface: #fffefa;
+  --surface-2: #eeece5;
+  --surface-3: #e5e1d6;
+  --text: #181713;
+  --muted: #706b5c;
+  --line: rgba(119, 91, 34, .18);
+  --line-strong: rgba(162, 123, 42, .42);
+}
+
+html,
+body { background: var(--bg) !important; color: var(--text); }
+body { transition: background-color .32s ease, color .32s ease; }
+
+/* Replace legacy lavender/pink surfaces with restrained gold states. */
+.top-navigation.bottom-nav,
+.premium-header,
+.card,
+.enterprise-panel,
+.enterprise-row,
+.investment-card,
+.enterprise-stat,
+.settings-card { border-color: var(--line) !important; }
+.nav-item.is-active {
+  color: var(--gold-bright) !important;
+  background: linear-gradient(145deg, rgba(211, 174, 92, .2), rgba(211, 174, 92, .06)) !important;
+  border-color: var(--line-strong) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 228, 160, .08), 0 0 22px rgba(193, 148, 59, .12) !important;
+}
+html[data-theme="white"] .nav-item.is-active {
+  color: #74551b !important;
+  background: linear-gradient(145deg, rgba(205, 170, 88, .24), rgba(205, 170, 88, .08)) !important;
+}
+.nav-item.is-active .nav-icon,
+.quick-icon,
+.world-link-icon,
+.empty-icon { color: var(--gold-bright) !important; }
+.filter-button.is-active {
+  color: var(--gold-bright) !important;
+  border-color: var(--line-strong) !important;
+  background: rgba(203, 161, 72, .14) !important;
+}
+html[data-theme="white"] .filter-button.is-active { color: #74551b !important; }
+.button-secondary,
+.button-ghost { border-color: var(--line-strong) !important; }
+
+/* Cases are the main game surface: depth, tier glow, shine and a clear open affordance. */
+.cases-grid { perspective: 1200px; }
+.case-card {
+  border-color: rgba(224, 188, 106, .42) !important;
+  background: linear-gradient(145deg, #222119, #10100e) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .32), inset 0 1px rgba(255, 238, 193, .12) !important;
+}
+html[data-theme="white"] .case-card {
+  background: linear-gradient(145deg, #fffefa, #ebe6da) !important;
+  box-shadow: 0 14px 30px rgba(63, 50, 23, .12), inset 0 1px #fff !important;
+}
+.case-card:hover {
+  border-color: rgba(255, 226, 148, .82) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, .42), 0 0 28px rgba(215, 173, 76, .22), inset 0 1px rgba(255, 239, 188, .24) !important;
+}
+.case-card:active { transform: perspective(1050px) scale(.975) rotateX(0) rotateY(0) translateZ(0) !important; }
+.case-tier-badge { border-color: rgba(240, 207, 129, .55) !important; background: rgba(11, 10, 8, .72) !important; color: #ffe6ac !important; }
+html[data-theme="white"] .case-tier-badge { background: rgba(42, 35, 22, .8) !important; color: #fff4d5 !important; }
+.case-tier-common { --case-glow: rgba(210, 204, 188, .22); }
+.case-tier-uncommon { --case-glow: rgba(222, 207, 158, .3); }
+.case-tier-rare { --case-glow: rgba(213, 220, 222, .4); }
+.case-tier-epic { --case-glow: rgba(218, 183, 104, .4); }
+.case-tier-legendary { --case-glow: rgba(246, 206, 106, .56); }
+.case-tier-mythic { --case-glow: rgba(255, 233, 171, .72); }
+.case-tier-rare,
+.case-tier-epic,
+.case-tier-legendary,
+.case-tier-mythic { box-shadow: 0 16px 38px rgba(0, 0, 0, .35), 0 0 18px var(--case-glow), inset 0 -2px rgba(211, 170, 79, .48) !important; }
+.case-open-hint { color: var(--gold) !important; }
+
+/* Keep rarities distinct without reintroducing accent/pink accents. */
+.rarity-common { --rarity: #aaa596; --rarity-color: #aaa596; }
+.rarity-uncommon { --rarity: #c6c3a4; --rarity-color: #c6c3a4; }
+.rarity-rare { --rarity: #d9e1e5; --rarity-color: #d9e1e5; }
+.rarity-epic { --rarity: #d9b75f; --rarity-color: #d9b75f; }
+.rarity-legendary { --rarity: #f2c75e; --rarity-color: #f2c75e; }
+.rarity-mythic { --rarity: #fff0bc; --rarity-color: #fff0bc; }
+
+/* Small ambient life without a heavy renderer. */
+.ambient-orb { background: radial-gradient(circle, rgba(224, 187, 99, .17), transparent 70%) !important; }
+.world-city-glow,
+.world-live-dot { background: #e6c46e !important; box-shadow: 0 0 18px rgba(230, 196, 110, .52) !important; }
+.world-launch-card:hover,
+.world-launch-card:focus-visible { border-color: var(--line-strong) !important; box-shadow: 0 16px 32px rgba(0, 0, 0, .22), 0 0 22px rgba(208, 165, 70, .12) !important; }
+
+/* Ensure the result/reel and action buttons stay premium on both themes. */
+.opening-result[data-rarity="epic"] .result-image,
+.opening-result[data-rarity="legendary"] .result-image,
+.opening-result[data-rarity="mythic"] .result-image { box-shadow: 0 0 55px rgba(239, 202, 111, .4), 0 0 0 1px rgba(255, 238, 193, .4) !important; }
+.opening-result-actions .button { min-height: 46px; }
+.result-value strong,
+.investment-price,
+.enterprise-card-value { color: var(--gold-bright) !important; }
+
+@media (max-width: 620px) {
+  .case-card { transform-style: preserve-3d; }
+  .case-card:hover { transform: perspective(900px) translateY(-3px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(3px) !important; }
+  .case-card .case-art { min-height: 112px; }
+  .case-card-overlay strong { letter-spacing: .02em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-shine,
+  .case-art-particles,
+  .ambient-orb { animation: none !important; }
+}

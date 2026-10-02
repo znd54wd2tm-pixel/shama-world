@@ -1,0 +1,73 @@
+/* Premium bank surface with dark/gold glass and compact mobile behavior. */
+.bank-enhanced-ui { display: grid; gap: 13px; }
+.bank-dashboard, .bank-chart-card, .bank-accounts, .bank-transactions {
+  display: grid; gap: 14px; padding: clamp(13px, 3vw, 21px);
+  overflow: hidden; border: 1px solid var(--line-strong); border-radius: 20px;
+  background: linear-gradient(145deg, rgba(35, 29, 18, .94), rgba(16, 15, 12, .98));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 255, 255, .04);
+}
+.bank-dashboard-hero { display: grid; gap: 5px; }
+.bank-dashboard-hero > strong { color: var(--gold-bright); font-size: clamp(30px, 7vw, 46px); letter-spacing: -.04em; line-height: 1.05; }
+.bank-dashboard-hero > strong small { font-size: .38em; letter-spacing: .08em; }
+.bank-pnl { color: #a8d39a; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.bank-dashboard-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.bank-dashboard-metrics > div { display: grid; gap: 6px; min-width: 0; padding: 11px; border: 1px solid rgba(218, 181, 99, .13); border-radius: 13px; background: rgba(255, 255, 255, .025); }
+.bank-dashboard-metrics small, .bank-account-card .eyebrow { color: var(--muted); font-size: 8px; letter-spacing: .13em; }
+.bank-dashboard-metrics b { overflow-wrap: anywhere; color: var(--text); font-size: 13px; }
+.bank-portfolio-overview { display: grid; grid-template-columns: 106px minmax(0, 1fr); align-items: center; gap: 16px; }
+.bank-donut { width: 100px; height: 100px; border: 1px solid rgba(224, 188, 106, .26); border-radius: 50%; box-shadow: 0 0 26px rgba(215, 180, 93, .12); position: relative; }
+.bank-donut::after { position: absolute; inset: 16px; content: ""; border: 1px solid rgba(224, 188, 106, .2); border-radius: 50%; background: var(--surface); }
+.bank-allocation-legend { display: grid; gap: 7px; }
+.bank-allocation-row { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; align-items: center; gap: 8px; color: var(--muted); font-size: 10px; }
+.bank-allocation-row b { color: var(--text); }
+.allocation-dot { width: 8px; height: 8px; border-radius: 50%; background: #d7b45d; }
+.allocation-dot--1 { background: #8b6d32; }.allocation-dot--2 { background: #f4edda; }.allocation-dot--3 { background: #6c542a; }.allocation-dot--4 { background: #ad955b; }.allocation-dot--5 { background: #56482f; }
+.bank-market-status { display: flex; flex-wrap: wrap; gap: 14px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8px; letter-spacing: .12em; }
+.bank-market-status span { display: inline-flex; align-items: center; gap: 6px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #d2a94f; box-shadow: 0 0 10px currentColor; }
+.status-dot.is-live { background: #7ebc79; }
+.bank-chart-card { gap: 10px; }
+.bank-chart-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.bank-chart-heading h3 { margin: 3px 0 0; color: var(--text); font-size: 15px; }
+.bank-chart-heading > strong { color: var(--gold-bright); font-size: 13px; }
+.bank-chart-assets, .bank-chart-periods { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: thin; }
+.bank-chart-assets button, .bank-chart-periods button { flex: 0 0 auto; min-height: 32px; padding: 0 10px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255, 255, 255, .03); color: var(--muted); font: inherit; font-size: 9px; font-weight: 800; cursor: pointer; }
+.bank-chart-assets button.is-active, .bank-chart-periods button.is-active { border-color: var(--gold); background: rgba(215, 180, 93, .12); color: var(--gold-bright); }
+.bank-chart-plot { min-height: 112px; }
+.bank-chart-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.bank-chart-grid { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 5; }
+.bank-chart-line { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 5px rgba(215, 180, 93, .35)); }
+.bank-chart-point { fill: var(--gold-bright); stroke: var(--bg); stroke-width: 1.5; }
+.bank-chart-empty { min-height: 90px; display: grid; place-items: center; margin: 0; color: var(--muted); font-size: 11px; text-align: center; }
+.bank-chart-range { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 8px; }
+.bank-chart-range b { color: var(--text); }
+.bank-account-card { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.bank-account-card > div { display: grid; gap: 5px; min-width: 0; }
+.bank-account-card strong { color: var(--gold-bright); font-size: 15px; overflow-wrap: anywhere; }
+.bank-account-card small { color: var(--muted); font-size: 9px; line-height: 1.4; }
+.bank-savings-actions { display: grid; grid-template-columns: minmax(80px, .7fr) repeat(2, minmax(0, 1fr)); gap: 7px; align-items: center; }
+.bank-savings-actions input { min-height: 43px; min-width: 0; padding: 0 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--text); font: inherit; }
+.bank-savings-status { grid-column: 1 / -1; min-height: 14px; color: var(--gold-bright); font-size: 9px; }
+.bank-transaction { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.bank-transaction:last-child { border-bottom: 0; }
+.bank-transaction > span { display: grid; gap: 4px; min-width: 0; }
+.bank-transaction b { color: var(--text); font-size: 9px; }
+.bank-transaction small { overflow: hidden; color: var(--muted); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.bank-transaction > strong { color: var(--gold-bright); font-size: 10px; white-space: nowrap; }
+html[data-theme="white"] .bank-dashboard, html[data-theme="white"] .bank-chart-card, html[data-theme="white"] .bank-accounts, html[data-theme="white"] .bank-transactions { background: linear-gradient(145deg, rgba(255, 255, 252, .97), rgba(245, 243, 237, .98)); box-shadow: 0 14px 36px rgba(73, 58, 24, .09); }
+html[data-theme="white"] .bank-dashboard-metrics > div { background: rgba(140, 108, 45, .035); }
+html[data-theme="white"] .bank-donut::after { background: #fffefa; }
+@media (max-width: 620px) {
+  .bank-dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bank-portfolio-overview { grid-template-columns: 86px minmax(0, 1fr); gap: 12px; }
+  .bank-donut { width: 82px; height: 82px; }
+  .bank-donut::after { inset: 13px; }
+  .bank-account-card { grid-template-columns: 1fr 1fr; }
+  .bank-account-card > div:last-child { grid-column: 1 / -1; }
+  .bank-savings-actions { grid-template-columns: 1fr 1fr; }
+  .bank-savings-actions input { grid-column: 1 / -1; }
+  .bank-chart-heading h3 { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bank-enhanced-ui *, .bank-enhanced-ui *::before, .bank-enhanced-ui *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
