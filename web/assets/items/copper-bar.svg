@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Copper Bar">
+    <defs><radialGradient id="bg"><stop stop-color="#29261e"/><stop offset="1" stop-color="#090a0c"/></radialGradient>
+    <linearGradient id="metal" x2=".8" y2="1"><stop stop-color="#faf0ce"/><stop offset=".18" stop-color="#e2cd9b"/><stop offset=".5" stop-color="#65502d"/><stop offset=".72" stop-color="#e2cd9b"/><stop offset="1" stop-color="#eee0b7"/></linearGradient>
+    <linearGradient id="body" x2=".6" y2="1"><stop stop-color="#55575a"/><stop offset=".35" stop-color="#25272a"/><stop offset=".7" stop-color="#0c0e11"/><stop offset="1" stop-color="#343536"/></linearGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#8c9a9e"/><stop offset=".3" stop-color="#29353d"/><stop offset="1" stop-color="#10151a"/></linearGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="12"/></filter></defs>
+    <rect width="640" height="480" fill="url(#bg)"/><ellipse cx="320" cy="365" rx="215" ry="19" fill="#000" opacity=".8" filter="url(#shadow)"/>
+    <path d="M70 386H570M105 392H535" stroke="#e2cd9b" opacity=".17"/>
+    <g stroke-linejoin="round"><path d="M164 205L367 147L489 230L287 296Z" fill="url(#metal)" stroke="#d4c49a" stroke-width="2"/><path d="M164 205V279L287 359V296Z" fill="#635239"/><path d="M287 296L489 230V302L287 359Z" fill="#a68b59"/><path d="M191 205L364 162L460 228L287 278Z" fill="none" stroke="#4d3f29"/><text x="320" y="231" text-anchor="middle" fill="#4d3f29" font-family="serif" font-size="22" transform="rotate(10 320 231)">FINE / 024</text></g><text x="38" y="39" fill="#e2cd9b" font-family="Arial,sans-serif" font-size="10" letter-spacing="4">SHAMA WORLD / METAL / 024</text>
+    <text x="320" y="439" text-anchor="middle" fill="#efebe1" font-family="Arial,sans-serif" font-size="17" letter-spacing="1">Copper Bar</text></svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Jordan 12 Royal">
+    <defs><radialGradient id="bg"><stop stop-color="#29261e"/><stop offset="1" stop-color="#090a0c"/></radialGradient>
+    <linearGradient id="metal" x2=".8" y2="1"><stop stop-color="#faf0ce"/><stop offset=".18" stop-color="#b67c4b"/><stop offset=".5" stop-color="#65502d"/><stop offset=".72" stop-color="#b67c4b"/><stop offset="1" stop-color="#eee0b7"/></linearGradient>
+    <linearGradient id="body" x2=".6" y2="1"><stop stop-color="#55575a"/><stop offset=".35" stop-color="#25272a"/><stop offset=".7" stop-color="#0c0e11"/><stop offset="1" stop-color="#343536"/></linearGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#8c9a9e"/><stop offset=".3" stop-color="#29353d"/><stop offset="1" stop-color="#10151a"/></linearGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="12"/></filter></defs>
+    <rect width="640" height="480" fill="url(#bg)"/><ellipse cx="320" cy="365" rx="215" ry="19" fill="#000" opacity=".8" filter="url(#shadow)"/>
+    <path d="M70 386H570M105 392H535" stroke="#b67c4b" opacity=".17"/>
+    <g stroke-linejoin="round"><path d="M164 175L240 154L286 245L383 270L489 283L515 328L492 350H133L114 326L143 269Z" fill="url(#body)" stroke="#b67c4b" stroke-width="4"/><path d="M126 320L505 319L515 339L495 357H128L112 341Z" fill="url(#metal)"/><path d="M261 234L324 283L391 276L286 310L226 281Z" fill="#b67c4b"/><path d="M183 181L238 176L263 237L171 251Z" fill="#26292c" stroke="#68635b"/><path d="M235 231L287 238" stroke="#ddd5c0" stroke-width="5"/><path d="M235 243L287 250" stroke="#ddd5c0" stroke-width="5"/><path d="M235 255L287 262" stroke="#ddd5c0" stroke-width="5"/><path d="M235 267L287 274" stroke="#ddd5c0" stroke-width="5"/><path d="M235 279L287 286" stroke="#ddd5c0" stroke-width="5"/></g><text x="38" y="39" fill="#b67c4b" font-family="Arial,sans-serif" font-size="10" letter-spacing="4">SHAMA WORLD / SNEAKERS / 019</text>
+    <text x="320" y="439" text-anchor="middle" fill="#efebe1" font-family="Arial,sans-serif" font-size="17" letter-spacing="1">Jordan 12 Royal</text></svg>

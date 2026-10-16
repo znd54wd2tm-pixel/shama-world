@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Наушники «Студия»">
+    <defs><radialGradient id="bg"><stop stop-color="#29261e"/><stop offset="1" stop-color="#090a0c"/></radialGradient>
+    <linearGradient id="metal" x2=".8" y2="1"><stop stop-color="#faf0ce"/><stop offset=".18" stop-color="#d6b16b"/><stop offset=".5" stop-color="#65502d"/><stop offset=".72" stop-color="#d6b16b"/><stop offset="1" stop-color="#eee0b7"/></linearGradient>
+    <linearGradient id="body" x2=".6" y2="1"><stop stop-color="#55575a"/><stop offset=".35" stop-color="#25272a"/><stop offset=".7" stop-color="#0c0e11"/><stop offset="1" stop-color="#343536"/></linearGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#8c9a9e"/><stop offset=".3" stop-color="#29353d"/><stop offset="1" stop-color="#10151a"/></linearGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="12"/></filter></defs>
+    <rect width="640" height="480" fill="url(#bg)"/><ellipse cx="320" cy="365" rx="215" ry="19" fill="#000" opacity=".8" filter="url(#shadow)"/>
+    <path d="M70 386H570M105 392H535" stroke="#d6b16b" opacity=".17"/>
+    <g stroke-linejoin="round"><path d="M207 279V221Q207 109 320 109Q433 109 433 221V279" fill="none" stroke="#11151a" stroke-width="42"/><path d="M208 233V213Q208 113 320 113Q432 113 432 213V233" fill="none" stroke="#b8995f" stroke-width="6"/><rect x="178" y="220" width="64" height="123" rx="26" fill="url(#body)" stroke="#c3a367" stroke-width="3"/><rect x="398" y="220" width="64" height="123" rx="26" fill="url(#body)" stroke="#c3a367" stroke-width="3"/></g><text x="38" y="39" fill="#d6b16b" font-family="Arial,sans-serif" font-size="10" letter-spacing="4">SHAMA WORLD / ELECTRONICS / 033</text>
+    <text x="320" y="439" text-anchor="middle" fill="#efebe1" font-family="Arial,sans-serif" font-size="17" letter-spacing="1">Наушники «Студия»</text></svg>
