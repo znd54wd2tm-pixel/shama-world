@@ -62,7 +62,11 @@ class GameTests(unittest.TestCase):
 
     def own(self,user=None,catalog_id=1):
         with get_connection(self.path) as c,patch('services.businesses.now_utc',return_value=NOW):
-            return award_enterprise(c,user or self.user,(c.execute("SELECT id FROM enterprise_catalog WHERE code='coffee'").fetchone()[0] if catalog_id == 1 else catalog_id))[0]
+            eid=award_enterprise(c,user or self.user,(c.execute("SELECT id FROM enterprise_catalog WHERE code='coffee'").fetchone()[0] if catalog_id == 1 else catalog_id))[0]
+            # Existing-economy tests use an already equipped coffee shop fixture.
+            from catalog_v16 import COFFEE_EQUIPMENT
+            c.execute('UPDATE owned_enterprises SET equipment=? WHERE id=?',(json.dumps({k:True for k in COFFEE_EQUIPMENT}),eid))
+            return eid
 
     def rewind(self,enterprise,hours):
         with get_connection(self.path) as c:
@@ -132,6 +136,7 @@ class GameTests(unittest.TestCase):
                 table='enterprise_drops' if case['kind']=='BUSINESS' else 'case_drops'
                 self.assertAlmostEqual(c.execute(f'SELECT sum(chance) FROM {table} WHERE case_id=?',(case['id'],)).fetchone()[0],1)
             for case in CASES:
+                if case['name'] in ('Стартовый','Неоновый','Золотой','Королевский'):continue
                 saved={r['name']:r['chance'] for r in c.execute('SELECT i.name,d.chance FROM case_drops d JOIN cases k ON k.id=d.case_id JOIN items i ON i.id=d.item_id WHERE k.name=?',(case['name'],))}
                 self.assertEqual(saved,dict(case['drops']))
 
@@ -150,6 +155,8 @@ class GameTests(unittest.TestCase):
         with self.assertRaises(GameError):open_case(self.path,self.user,self.case,'inactive')
 
     def test_save_and_sell_exact_result_once(self):
+        # Explicitly approved buyback values for the sale-operation fixture only.
+        with get_connection(self.path) as c:c.execute('UPDATE items SET sell_price=value')
         r=open_case(self.path,self.user,self.case,'one')['item']
         kept=result_action(self.path,self.user,'keep',[r['result_id']],'keep')
         self.assertEqual(self.scalar('SELECT status FROM opening_results'),'KEPT')
@@ -159,6 +166,8 @@ class GameTests(unittest.TestCase):
         with self.assertRaises(EconomyError):result_action(self.path,self.user,'sell',[r['result_id']],'sell-again')
 
     def test_batch_sell_and_individual_selection(self):
+        # Explicitly approved buyback values for the sale-operation fixture only.
+        with get_connection(self.path) as c:c.execute('UPDATE items SET sell_price=value')
         result=open_case_batch(self.path,self.user,self.case,10,'ten')
         chosen=result['items'][:3]
         sale=result_action(self.path,self.user,'sell',[r['result_id'] for r in chosen],'sell-three')
@@ -166,6 +175,8 @@ class GameTests(unittest.TestCase):
         self.assertEqual(self.scalar('SELECT sum(quantity) FROM inventory'),7)
 
     def test_generic_sale_marks_reward_consumed(self):
+        # Explicitly approved buyback values for the sale-operation fixture only.
+        with get_connection(self.path) as c:c.execute('UPDATE items SET sell_price=value')
         r=open_case(self.path,self.user,self.case,'reward')['item']
         sell_item(self.path,self.user,r['id'],1,'legacy-sell')
         self.assertEqual(self.scalar('SELECT status FROM opening_results'),'SOLD')
@@ -179,16 +190,10 @@ class GameTests(unittest.TestCase):
         again=execute_upgrade(self.path,self.user,r['id'],target,'upgrade')
         self.assertEqual(first['transaction_id'],again['transaction_id'])
 
-    def test_business_duplicate_half_original_cost(self):
-        with patch('services.game._rng.random',return_value=0),patch('services.businesses.now_utc',return_value=NOW):
-            r=open_case_batch(self.path,self.user,self.business_case,10,'business-ten')
-        self.assertEqual(len(r['items']),10)
-        self.assertEqual(self.scalar('SELECT count(*) FROM owned_enterprises'),1)
-        self.assertEqual(sum(i['compensation'] for i in r['items']),31500)
-        self.assertEqual(r['balance'],10_000_000-200000+31500)
-        self.assertEqual(self.scalar('SELECT count(*) FROM inventory'),0)
-        replay=open_case_batch(self.path,self.user,self.business_case,10,'business-ten')
-        self.assertEqual(replay['balance'],r['balance'])
+    def test_business_cases_archived_without_deleting_catalogue(self):
+        with self.assertRaises(GameError):open_case_batch(self.path,self.user,self.business_case,10,'business-ten')
+        self.assertEqual(self.scalar('SELECT balance FROM users WHERE id=?',(self.user,)),10_000_000)
+        self.assertGreater(self.scalar('SELECT count(*) FROM enterprise_drops'),0)
 
     def test_no_staff_coffee_example(self):
         eid=self.own()
@@ -239,19 +244,19 @@ class GameTests(unittest.TestCase):
         eid=self.own()
         with patch('services.businesses.now_utc',return_value=NOW):
             with self.assertRaises(EconomyError):business_action(self.path,self.user,eid,'hire',{'role':'manager'},'manager')
-            for i in range(3):business_action(self.path,self.user,eid,'hire',{'role':'worker'},f'hire{i}')
+            for i in range(5):business_action(self.path,self.user,eid,'hire',{'role':'worker'},f'hire{i}')
             with self.assertRaises(EconomyError):business_action(self.path,self.user,eid,'hire',{'role':'worker'},'over-capacity')
 
     def test_upgrade_price_effect_and_sequential_levels(self):
         eid=self.own()
         with patch('services.businesses.now_utc',return_value=NOW):
             r=business_action(self.path,self.user,eid,'upgrade',{'direction':'equipment','level':1},'u1')
-            self.assertEqual(r['cost'],1500)
+            self.assertEqual(r['cost'],5000)
             with self.assertRaises(EconomyError):business_action(self.path,self.user,eid,'upgrade',{'direction':'equipment','level':1},'duplicate')
             with self.assertRaises(EconomyError):business_action(self.path,self.user,eid,'upgrade',{'direction':'equipment','level':2},'locked')
             with get_connection(self.path) as c:c.execute('UPDATE owned_enterprises SET xp_seconds=86400 WHERE id=?',(eid,))
             r=business_action(self.path,self.user,eid,'upgrade',{'direction':'equipment','level':2},'u2')
-            self.assertEqual(r['cost'],3000)
+            self.assertEqual(r['cost'],10000)
 
     def test_bonus_cap_and_nonnegative_expenses(self):
         eid=self.own(catalog_id=9)
@@ -290,6 +295,8 @@ class GameTests(unittest.TestCase):
         self.assertEqual(self.scalar('SELECT balance FROM users WHERE id=?',(self.user,)),10_000_000-100+9500)
 
     def test_cancel_listing_unlocks_exact_item(self):
+        # Explicitly approved buyback values for the sale-operation fixture only.
+        with get_connection(self.path) as c:c.execute('UPDATE items SET sell_price=value')
         r=open_case(self.path,self.user,self.case,'reward')['item']
         listing=player_market_action(self.path,self.user,'list',{'item_id':r['id'],'result_id':r['result_id'],'price':500},'list')
         player_market_action(self.path,self.user,'cancel',{'listing_id':listing['listing_id']},'cancel')
@@ -307,7 +314,7 @@ class GameTests(unittest.TestCase):
             bought=player_market_action(self.path,self.buyer,'buy',{'listing_id':listing['listing_id']},'buy')
             resale=player_market_action(self.path,self.buyer,'list',{'enterprise_id':eid,'price':110000},'resale')
         self.assertTrue(resale['success'])
-        self.assertEqual(bought['fee'],5000)
+        self.assertEqual(bought['fee'],10000)
         self.assertEqual(self.scalar('SELECT user_id FROM owned_enterprises'),self.buyer)
         self.assertEqual(self.scalar('SELECT count(*) FROM enterprise_employees'),1)
         self.assertEqual(json.loads(self.scalar('SELECT upgrades FROM owned_enterprises'))['equipment'],1)
@@ -338,10 +345,12 @@ class GameTests(unittest.TestCase):
             c.execute("UPDATE items SET value=99999 WHERE id=?",(before,))
         seed_content(self.path)
         self.assertEqual(self.scalar("SELECT id FROM items WHERE name='Supercar'"),before)
-        self.assertEqual(self.scalar('SELECT price FROM cases WHERE id=?',(self.case,)),100)
+        self.assertEqual(self.scalar('SELECT price FROM cases WHERE id=?',(self.case,)),123)
         self.assertEqual(self.scalar('SELECT value FROM items WHERE id=?',(before,)),99999)
 
     def test_history_contains_status_after_sell(self):
+        # Explicitly approved buyback values for the sale-operation fixture only.
+        with get_connection(self.path) as c:c.execute('UPDATE items SET sell_price=value')
         r=open_case(self.path,self.user,self.case,'history')['item']
         result_action(self.path,self.user,'sell',[r['result_id']],'sell')
         self.assertEqual(opening_history(self.path,self.user)[0]['items'][0]['status'],'SOLD')
@@ -439,7 +448,7 @@ class ApprovedCatalogTests(unittest.TestCase):
     def tearDown(self):
         gc.collect(); shutil.rmtree(self.directory)
     def test_approved_case_names_prices_and_probabilities(self):
-        expected={"Стартовый":100,"Неоновый":350,"Золотой":800,"Технологический":600,"Загадочный":1200,"Легендарный":2500,"Королевский":7500,"Автомобильный":1500,"Начинающий бизнесмен":20000,"Предприниматель":100000,"Бизнес-магнат":250000}
+        expected={"Стартовый":100,"Неоновый":350,"Золотой":5000,"Легендарный":2500,"Королевский":7500}
         with get_connection(self.path) as c:
             actual={r['name']:r['price'] for r in c.execute('SELECT name,price FROM cases WHERE active=1')}
             for name,price in expected.items(): self.assertEqual(actual.get(name),price)

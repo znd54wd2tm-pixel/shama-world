@@ -78,6 +78,7 @@ def open_cases(database_path: str, user_id: int, case_id: int, quantity: int, re
         if not user:
             raise GameError("Пользователь не найден")
         cost = int(case["price"]) * quantity
+        if cost<=0:raise EmptyDropPoolError('Некорректная цена кейса')
         if user["balance"] < cost:
             raise InsufficientBalanceError(f"Недостаточно средств. Нужно ${cost:,}; не хватает ${cost-user['balance']:,}".replace(",", " "))
         business = case["kind"] == "BUSINESS"
@@ -106,10 +107,13 @@ def open_cases(database_path: str, user_id: int, case_id: int, quantity: int, re
                     record_transaction(c,user_id,"REWARD",compensation,before,balance,description="Компенсация повторного предприятия",metadata={"batch_id":batch_id,"slot":slot},request_id=f"compensation:{result_id}")
                     item["status"] = "COMPENSATED"
             else:
+                from services.item_view import present
+                view=present(row)
                 exists = c.execute("SELECT 1 FROM inventory WHERE user_id=? AND item_id=?", (user_id,row["id"])).fetchone()
                 new_types += int(exists is None)
                 add_item(c,user_id,row["id"])
                 item.update(value=row["value"],description=row["description"],category=row["category"])
+                item.update(name=view['name'],sale_available=view['sale_available'],sell_price=row['sell_price'],reference_value=view.get('reference_value',row['value']),asset_status=row['asset_status'])
                 c.execute("INSERT INTO case_openings(user_id,case_id,item_id,price_paid,request_id) VALUES (?,?,?,?,?)", (user_id,case_id,row["id"],case["price"],f"v15:{result_id}"))
             c.execute("INSERT INTO opening_results(id,batch_id,slot,user_id,item_id,enterprise_id,compensation,status,snapshot_json) VALUES (?,?,?,?,?,?,?,?,?)", (result_id,batch_id,slot,user_id,None if business else row["id"],enterprise_id,item["compensation"],item["status"],json.dumps(item,ensure_ascii=False)))
             results.append(item)

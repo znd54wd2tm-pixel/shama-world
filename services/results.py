@@ -25,8 +25,10 @@ def result_action(path: str, user_id: int, action: str, ids: list[str], request_
             if action == "sell":
                 if not row["item_id"]:
                     raise EconomyError("Предприятия продаются через SH MARKET")
+                from services.item_view import sale_price
+                price=sale_price(c,row['item_id'])
                 consume_item(c,user_id,row["item_id"],1,"SOLD",[result_id])
-                amount += int(row["value"])
+                amount += price
                 sold += 1
             else:
                 c.execute("UPDATE opening_results SET status='KEPT' WHERE id=?", (result_id,))

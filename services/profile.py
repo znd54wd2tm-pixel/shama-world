@@ -41,15 +41,20 @@ def evaluate_achievements(connection: Any, user_id: int) -> None:
     rows = connection.execute("SELECT * FROM achievements").fetchall()
     for row in rows:
         if _achievement_progress(user, row["code"]) >= int(row["requirement"]):
-            connection.execute("INSERT OR IGNORE INTO user_achievements(user_id, achievement_id) VALUES (?, ?)", (user_id, row["id"]))
+            inserted=connection.execute("INSERT OR IGNORE INTO user_achievements(user_id, achievement_id) VALUES (?, ?)", (user_id, row["id"]))
+            if inserted.rowcount==1 and row['reward_xp']:
+                connection.execute('UPDATE users SET xp=xp+?,level=(xp+?)/100+1 WHERE id=?',(row['reward_xp'],row['reward_xp'],user_id))
+                record_transaction(connection,user_id,'REWARD',0,user['balance'],user['balance'],description='Достижение: '+row['name'],metadata={'achievement_id':row['id'],'reward_xp':row['reward_xp']},request_id=f'achievement:{row["id"]}')
 
 
 def profile(database_path: str, user_id: int) -> dict[str, Any]:
     with get_connection(database_path) as connection:
+        connection.execute('BEGIN IMMEDIATE')
         user = connection.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
         if user is None:
             raise ProfileError("Пользователь не найден")
         evaluate_achievements(connection, user_id)
+        user = connection.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
         connection.commit()
         data = {key: user[key] for key in user.keys() if key not in {"farm_last_claim_at", "business_last_claim_at", "bank_last_claim_at"}}
         spent = connection.execute("SELECT COALESCE(SUM(balance_before - balance_after), 0) AS total FROM transactions WHERE user_id = ? AND balance_after < balance_before", (user_id,)).fetchone()["total"]

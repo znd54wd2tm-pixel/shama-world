@@ -415,6 +415,8 @@ def init_db(database_path: Path | str) -> None:
     path = Path(database_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     from migrations.v15 import backup_before_migration, migrate
+    from migrations.v16 import backup_before_migration as backup_v16, migrate as migrate_v16
+    backup_v16(path)
     backup_before_migration(path)
     with get_connection(path) as connection:
         # WAL keeps reads responsive while a game transaction is being
@@ -428,6 +430,7 @@ def init_db(database_path: Path | str) -> None:
         _migrate_transactions_constraint(connection)
         _migrate_earning_sessions_constraint(connection)
         migrate(connection)
+        migrate_v16(connection)
         connection.commit()
 
 

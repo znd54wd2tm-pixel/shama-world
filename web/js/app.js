@@ -37,7 +37,7 @@
     market: ["SH MARKET", "MAC MARKET", ""],
   };
   const $ = (selector) => document.querySelector(selector);
-  const ASSET_VERSION = "2026-10-16-v15";
+  const ASSET_VERSION = "16.1";
   const THEME_STORAGE_KEY = "shama-world-theme";
   function savedTheme() {
     try { return localStorage.getItem(THEME_STORAGE_KEY) === "white" ? "white" : "dark"; }
@@ -54,7 +54,7 @@
       button.setAttribute("aria-pressed", String(selected));
       button.classList.toggle("is-active", selected);
     });
-    const color = activeTheme === "white" ? "#f5f3ed" : "#0b0b0a";
+    const color = activeTheme === "white" ? "#f5f3ed" : "#08060f";
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) metaTheme.content = color;
     if (window.Telegram?.WebApp?.setHeaderColor) window.Telegram.WebApp.setHeaderColor(color);
@@ -63,7 +63,7 @@
     }
   }
   function assetUrl(path) {
-    if (!path) return "/assets/items/sh-coins.jpg?v=" + ASSET_VERSION;
+    if (!path) return "/assets/item-image-unavailable.svg?v=" + ASSET_VERSION;
     return path.startsWith("/assets/") && !path.includes("?") ? `${path}?v=${ASSET_VERSION}` : path;
   }
   document.addEventListener("error", (event) => {
@@ -72,12 +72,8 @@
     const src = img.getAttribute("src") || "";
     if (img.dataset.fallbackApplied) return;
     img.dataset.fallbackApplied = "1";
-    const fallback = src.startsWith("/assets/cases/")
-      ? "/assets/cases/starter.jpg"
-      : src.startsWith("/assets/world/")
-        ? "/assets/world/shama-world-city.png"
-        : "/assets/items/neon-token.svg";
-    img.src = `${fallback}?v=${ASSET_VERSION}`;
+    const fallback = "/assets/item-image-unavailable.svg";
+    img.src = `${fallback}?v=${ASSET_VERSION}`; img.alt = "Изображение недоступно";
   }, true);
 
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[char]));
@@ -86,7 +82,7 @@
   function setTelegramReady() {
     if (!window.Telegram || !window.Telegram.WebApp) return;
     window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand();
-    if (window.Telegram.WebApp.setHeaderColor) window.Telegram.WebApp.setHeaderColor(activeTheme === "white" ? "#f5f3ed" : "#0b0b0a");
+    if (window.Telegram.WebApp.setHeaderColor) window.Telegram.WebApp.setHeaderColor(activeTheme === "white" ? "#f5f3ed" : "#08060f");
   }
   function initials(user) { return `${(user.first_name || "S")[0]}${(user.last_name || "W")[0]}`.toUpperCase(); }
   function closeModal(id, force = false) {
@@ -145,6 +141,9 @@
     $("#xp-progress").style.width = `${Math.min(100, user.xp % 100)}%`; $("#profile-xp-label").textContent = Math.min(100, user.xp % 100);
     $("#profile-avatar").textContent = initials(user); $("#profile-avatar-large").textContent = initials(user); $("#cases-balance").textContent = `${window.shamaMoney(user.balance)}`;
     const pageAvatar = $("#profile-page-avatar"); if (pageAvatar) pageAvatar.textContent = initials(user);
+    if(user.photo_url){
+      for(const selector of ['#profile-avatar','#profile-avatar-large','#profile-page-avatar']){const host=$(selector);if(host){const img=document.createElement('img');img.src=user.photo_url;img.alt=fullName;img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:inherit';host.replaceChildren(img);}}
+    }
     const pageUsername = $("#profile-page-username"); if (pageUsername) pageUsername.textContent = user.username ? `@${user.username}` : "Игрок SHAMA";
     const pageFullName = $("#profile-page-full-name"); if (pageFullName) pageFullName.textContent = fullName;
     const pageLevel = $("#profile-page-level"); if (pageLevel) pageLevel.textContent = user.level;
@@ -211,7 +210,7 @@
     $("#cases-balance").textContent = `${window.shamaMoney(state.currentUser?.balance)}`;
     const count = $("#cases-count"); if (count) count.textContent = state.cases.length;
   }
-  async function loadCases() { if (state.cases.length) return renderCases(); try { state.cases = (await window.api.getCases()).cases || []; renderCases(); } catch (error) { toast(error.message || "Не удалось загрузить кейсы."); } }
+  async function loadCases() { if (state.cases.length) return renderCases(); try { state.cases = ((await window.api.getCases()).cases || []).filter(c => c.active); renderCases(); } catch (error) { toast(error.message || "Не удалось загрузить кейсы."); } }
   function chancePercent(chance) { return `${(Number(chance) * 100).toFixed(Number(chance) < 0.1 ? 1 : 0)}%`; }
   const caseUI = window.createCaseUI({
     toast, openModal, closeModal, user: () => state.currentUser,
@@ -238,15 +237,15 @@
     const visible = state.inventory.filter((item) => state.inventoryFilter === "ALL" || String(item.rarity).toUpperCase() === state.inventoryFilter);
     $("#inventory-count").textContent = `${state.inventory.reduce((sum, item) => sum + item.quantity, 0)} предметов`;
     $("#inventory-empty").classList.toggle("is-hidden", state.inventory.length > 0);
-    $("#inventory-grid").innerHTML = visible.map((item) => `<button type="button" class="inventory-card card ${rarityClass(item.rarity)}" data-item-id="${item.id}" data-tilt-card><div class="item-image-wrap"><img src="${assetUrl(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async" /></div><div class="item-card-copy"><strong>${escapeHtml(item.name)}</strong><span class="rarity-label">${item.rarity}</span><small>${window.shamaMoney(item.value)} · ×${item.quantity}</small></div></button>`).join("");
+    $("#inventory-grid").innerHTML = visible.map((item) => `<button type="button" class="inventory-card card ${rarityClass(item.rarity)}" data-item-id="${item.id}" data-tilt-card><div class="item-image-wrap"><img src="${assetUrl(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async" /></div><div class="item-card-copy"><strong>${escapeHtml(item.name)}</strong><span class="rarity-label">${item.rarity}</span><small>${window.shamaMoney(item.reference_value??item.value)} · ×${item.quantity}</small></div></button>`).join("");
   }
-  async function showItem(itemId) { try { closeModal("upgrade-result-modal"); closeModal("upgrade-confirm-modal"); closeModal("upgrade-source-modal"); closeModal("upgrade-target-modal"); const item = await window.api.getInventoryItem(itemId); $("#item-modal").dataset.itemId = item.id; $("#item-detail-image").src = assetUrl(item.image); $("#item-detail-image").alt = item.name; $("#item-detail-name").textContent = item.name; $("#item-detail-rarity").textContent = item.rarity; $("#item-detail-rarity").className = `rarity-label ${rarityClass(item.rarity)}`; $("#item-detail-value").textContent = item.value; $("#item-detail-quantity").textContent = item.quantity; $("#item-detail-description").textContent = item.description; openModal("item-modal"); } catch (error) { toast(error.message || "Не удалось загрузить предмет."); } }
+  async function showItem(itemId) { try { closeModal("upgrade-result-modal"); closeModal("upgrade-confirm-modal"); closeModal("upgrade-source-modal"); closeModal("upgrade-target-modal"); const item = await window.api.getInventoryItem(itemId); $("#item-modal").dataset.itemId = item.id; $("#item-detail-image").src = assetUrl(item.image); $("#item-detail-image").alt = item.name; $("#item-detail-name").textContent = item.name; $("#item-detail-rarity").textContent = item.rarity; $("#item-detail-rarity").className = `rarity-label ${rarityClass(item.rarity)}`; $("#item-detail-value").textContent = item.reference_value??item.value; $("#item-detail-quantity").textContent = item.quantity; $("#item-detail-description").textContent = item.description; document.querySelector('[data-action="sell-item"]').disabled=item.sale_available===false; openModal("item-modal"); } catch (error) { toast(error.message || "Не удалось загрузить предмет."); } }
   function clampSellQuantity(value) { const max = state.sell.item ? state.sell.item.quantity : 1; const parsed = Number(value); if (!Number.isFinite(parsed)) return 1; return Math.min(max, Math.max(1, Math.trunc(parsed))); }
-  function renderSellModal() { const item = state.sell.item; if (!item) return; const quantity = clampSellQuantity(state.sell.quantity); state.sell.quantity = quantity; $("#sell-image").src = assetUrl(item.image); $("#sell-image").alt = item.name; $("#sell-name").textContent = item.name; $("#sell-price").textContent = `${window.shamaMoney(item.value)} / EACH`; $("#sell-quantity").value = quantity; $("#sell-quantity").max = item.quantity; $("#sell-total-value").textContent = `$${item.value * quantity}`; $("#confirm-sell-button").disabled = state.sell.running; $("#confirm-sell-button").textContent = state.sell.running ? "SELLING..." : "SELL"; }
+  function renderSellModal() { const item = state.sell.item; if (!item) return; const quantity = clampSellQuantity(state.sell.quantity); state.sell.quantity = quantity; $("#sell-image").src = assetUrl(item.image); $("#sell-image").alt = item.name; $("#sell-name").textContent = item.name; $("#sell-price").textContent = item.sale_available===false?"Цена выкупа ещё не утверждена":`${window.shamaMoney(item.sell_price??item.value)} за экземпляр`; $("#sell-quantity").value = quantity; $("#sell-quantity").max = item.quantity; $("#sell-total-value").textContent = `$${(item.sell_price??item.value) * quantity}`; $("#confirm-sell-button").disabled = state.sell.running || item.sale_available===false; $("#confirm-sell-button").textContent = state.sell.running ? "SELLING..." : "SELL"; }
   async function openSellModal(itemId) { try { const item = await window.api.getInventoryItem(itemId); state.sell.item = item; state.sell.quantity = 1; renderSellModal(); closeModal("item-modal"); openModal("sell-modal"); } catch (error) { toast(error.status === 409 ? "ITEM NO LONGER AVAILABLE" : (error.message || "SALE FAILED")); } }
   function updateSellQuantity(value) { state.sell.quantity = clampSellQuantity(value); renderSellModal(); }
   async function confirmSell() { const item = state.sell.item; if (!item || state.sell.running) return; state.sell.quantity = clampSellQuantity(state.sell.quantity); state.sell.running = true; renderSellModal(); try { const saleKey = `inventory-sale:${item.id}:${state.sell.quantity}`; const requestId = operationRequestId(saleKey); const result = await window.api.sellItem(item.id, state.sell.quantity, requestId); clearOperationRequestId(saleKey); state.currentUser.balance = result.balance; if (result.total_items_sold !== undefined) state.currentUser.total_items_sold = result.total_items_sold; if (result.total_sh_earned_from_sales !== undefined) state.currentUser.total_sh_earned_from_sales = result.total_sh_earned_from_sales; renderUser(state.currentUser); closeModal("sell-modal"); toast(`ITEM SOLD · +$${result.amount}`); await loadInventory(); state.sell.item = null; } catch (error) { const message = error.status >= 500 ? "SALE FAILED · TRY AGAIN" : (error.message === "NOT ENOUGH ITEMS" ? "NOT ENOUGH ITEMS" : (error.status === 409 && /ITEM|недоступен/.test(error.message || "") ? "ITEM NO LONGER AVAILABLE" : (error.message || "SALE FAILED"))); toast(message); } finally { state.sell.running = false; renderSellModal(); } }
-  async function loadTransactions() { try { const result = await window.api.getTransactions(); $("#transactions-list").innerHTML = result.transactions && result.transactions.length ? result.transactions.map((item) => `<div class="transaction-row"><img src="${item.item_image || "/assets/items/neon-token.svg"}" alt="" /><span><strong>${escapeHtml(item.type)} · ${escapeHtml(item.item_name || "SH") } ×${item.quantity}</strong><small>$${item.balance_before} → $${item.balance_after}</small></span><b>+$${item.amount}</b></div>`).join("") : `<p class="muted">История транзакций пока пуста.</p>`; } catch (_) { $("#transactions-list").innerHTML = `<p class="muted">История транзакций недоступна.</p>`; } }
+  async function loadTransactions() { try { const result = await window.api.getTransactions(); $("#transactions-list").innerHTML = result.transactions && result.transactions.length ? result.transactions.map((item) => `<div class="transaction-row"><img src="${item.item_image || "/assets/item-image-unavailable.svg"}" alt="" /><span><strong>${escapeHtml(item.type)} · ${escapeHtml(item.item_name || "SH") } ×${item.quantity}</strong><small>$${item.balance_before} → $${item.balance_after}</small></span><b>${item.balance_after>=item.balance_before?"+":"−"}$${Math.abs(item.balance_after-item.balance_before)}</b></div>`).join("") : `<p class="muted">История транзакций пока пуста.</p>`; } catch (_) { $("#transactions-list").innerHTML = `<p class="muted">История транзакций недоступна.</p>`; } }
 
   function renderWorldLocations(items) { const target = $("#world-locations"); if (!target) return; target.innerHTML = items.map((item) => `<button type="button" class="world-location card ${item.unlocked ? "" : "is-locked"}" data-world-type="${escapeHtml(item.type)}" ${item.unlocked ? "" : "disabled"}><img src="${assetUrl(item.image)}" alt="${escapeHtml(item.name)}" /><span class="badge">${item.unlocked ? "OPEN" : `LVL ${item.unlock_level}`}</span><div class="world-location-copy"><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.description)}</small></div></button>`).join(""); }
   function passiveLabel(system) { return ({ farm: "ФЕРМА", business: "БИЗНЕС", bank: "БАНК" })[system] || system; }
@@ -550,7 +549,7 @@
     const empty = $("#upgrade-inventory-empty"), grid = $("#upgrade-inventory-grid");
     if (!empty || !grid) return;
     empty.classList.toggle("is-hidden", state.inventory.length > 0);
-    grid.innerHTML = state.inventory.map((item) => `<button type="button" class="inventory-card card premium-item ${rarityClass(item.rarity)} ${state.upgrade.source && state.upgrade.source.id === item.id ? "is-selected" : ""}" data-upgrade-item-id="${item.id}" ${state.upgrade.running ? "disabled" : ""}><div class="item-image-wrap"><img src="${assetUrl(item.image)}" alt="${escapeHtml(item.name)}" /></div><div class="item-card-copy"><strong>${escapeHtml(item.name)}</strong><span class="rarity-label">${item.rarity}</span><small>${window.shamaMoney(item.value)} · ×${item.quantity}</small></div></button>`).join("");
+    grid.innerHTML = state.inventory.map((item) => `<button type="button" class="inventory-card card premium-item ${rarityClass(item.rarity)} ${state.upgrade.source && state.upgrade.source.id === item.id ? "is-selected" : ""}" data-upgrade-item-id="${item.id}" ${state.upgrade.running ? "disabled" : ""}><div class="item-image-wrap"><img src="${assetUrl(item.image)}" alt="${escapeHtml(item.name)}" /></div><div class="item-card-copy"><strong>${escapeHtml(item.name)}</strong><span class="rarity-label">${item.rarity}</span><small>${window.shamaMoney(item.reference_value??item.value)} · ×${item.quantity}</small></div></button>`).join("");
   }
   async function selectUpgradeSource(itemId) {
     if (state.upgrade.running) return;
@@ -565,7 +564,7 @@
     } catch (error) { if (state.upgrade.source?.id === item.id) toast(error.message || "Не удалось загрузить цели."); }
   }
   function renderRecommendations() { const items = state.upgrade.targets.slice(0, 5); $("#upgrade-recommendations").innerHTML = items.length ? items.map((item) => `<button type="button" class="recommendation-card ${rarityClass(item.rarity)}" data-target-id="${item.id}"><span><strong>${escapeHtml(item.name)}</strong><small>${window.shamaMoney(item.value)}</small></span><b>${Number(item.chance).toFixed(1)}%</b></button>`).join("") : `<p class="muted">Для этого предмета пока нет доступной цели.</p>`; }
-  function renderSourcePicker() { $("#upgrade-source-picker").innerHTML = state.inventory.length ? state.inventory.map((item) => `<button type="button" class="picker-item ${rarityClass(item.rarity)}" data-picker-source-id="${item.id}"><img src="${assetUrl(item.image)}" alt="" /><span><strong>${escapeHtml(item.name)}</strong><small>${item.rarity} · ${window.shamaMoney(item.value)} · ×${item.quantity}</small></span></button>`).join("") : `<p class="muted">YOUR INVENTORY IS EMPTY</p>`; openModal("upgrade-source-modal"); }
+  function renderSourcePicker() { $("#upgrade-source-picker").innerHTML = state.inventory.length ? state.inventory.map((item) => `<button type="button" class="picker-item ${rarityClass(item.rarity)}" data-picker-source-id="${item.id}"><img src="${assetUrl(item.image)}" alt="" /><span><strong>${escapeHtml(item.name)}</strong><small>${item.rarity} · ${window.shamaMoney(item.reference_value??item.value)} · ×${item.quantity}</small></span></button>`).join("") : `<p class="muted">YOUR INVENTORY IS EMPTY</p>`; openModal("upgrade-source-modal"); }
   function filteredTargets() { const items = state.upgrade.targets.filter((item) => state.upgrade.filter === "ALL" || item.rarity === state.upgrade.filter); return items.sort((a, b) => state.upgrade.sort === "asc" ? a.value - b.value : b.value - a.value); }
   function renderTargetPicker() { const items = filteredTargets(); $("#upgrade-target-picker").innerHTML = items.length ? items.map((item) => `<button type="button" class="picker-item ${rarityClass(item.rarity)}" data-picker-target-id="${item.id}"><img src="${assetUrl(item.image)}" alt="" /><span><strong>${escapeHtml(item.name)}</strong><small>${item.rarity} · ${window.shamaMoney(item.value)} · ${Number(item.chance).toFixed(1)}%</small></span></button>`).join("") : `<p class="muted">Нет предметов дороже исходного.</p>`; }
   async function showTargetPicker() { if (state.upgrade.running) return; if (!state.upgrade.source) return toast("Сначала выбери исходный предмет"); const sourceId = state.upgrade.source.id; if (!state.upgrade.targets.length) { try { const result = await window.api.getUpgradeTargets(sourceId); if (state.upgrade.source?.id !== sourceId || state.currentPage !== "upgrade") return; state.upgrade.targets = result.items || []; } catch (error) { return toast(error.message || "TARGET NO LONGER AVAILABLE"); } } if (state.currentPage !== "upgrade") return; renderTargetPicker(); openModal("upgrade-target-modal"); }

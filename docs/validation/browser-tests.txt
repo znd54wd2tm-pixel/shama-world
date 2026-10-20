@@ -1,0 +1,54 @@
+PASS World displays actual balance and XP
+PASS 375: world tab and no overflow
+PASS 375: cases tab and no overflow
+PASS 375: earn tab and no overflow
+PASS 375: inventory tab and no overflow
+PASS 375: upgrade tab and no overflow
+PASS 375: market tab and no overflow
+PASS 375: profile tab and no overflow
+PASS 390: world tab and no overflow
+PASS 390: cases tab and no overflow
+PASS 390: earn tab and no overflow
+PASS 390: inventory tab and no overflow
+PASS 390: upgrade tab and no overflow
+PASS 390: market tab and no overflow
+PASS 390: profile tab and no overflow
+PASS 430: world tab and no overflow
+PASS 430: cases tab and no overflow
+PASS 430: earn tab and no overflow
+PASS 430: inventory tab and no overflow
+PASS 430: upgrade tab and no overflow
+PASS 430: market tab and no overflow
+PASS 430: profile tab and no overflow
+PASS Five approved covers
+PASS Original cover is visible alongside the 3D preview
+PASS Case preview uses the canonical item image
+PASS Ten independent reels are mounted together
+PASS Ten distinct server result IDs
+PASS Ten results match tracks
+PASS Fast mode retains WebGL preview
+PASS Fast opening retains actual 3D scene
+PASS Restart restores reward without second charge
+PASS Inventory uses the same item image
+PASS Item details use the same image
+PASS Upgrade source uses the same item image
+PASS Player market uses the same item image
+PASS Item listing can be cancelled and returned
+PASS equipment keeps section, menu and scroll
+PASS premises keeps section, menu and scroll
+PASS marketing keeps section, menu and scroll
+PASS automation keeps section, menu and scroll
+PASS Hiring keeps management expanded
+PASS Bank dialog is above navigation
+PASS Bank deposits tab
+PASS Bank market tab
+PASS Bank loans tab
+PASS Bank more tab
+PASS Bank home tab
+PASS Deposit creates real server record
+PASS Stock purchase changes actual server ownership
+PASS Stock sale changes actual server ownership
+PASS Modal releases page scrolling
+PASS Escape closes bank and releases scroll
+PASS No JavaScript or server failures
+TOTAL 53 checks passed

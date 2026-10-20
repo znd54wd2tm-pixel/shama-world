@@ -24,7 +24,7 @@
       stopScene(); const generation = sceneGeneration;
       try {
         const module = await import('./case-scene.js');
-        if (generation !== sceneGeneration || (fast && preview)) return null;
+        if (generation !== sceneGeneration) return null;
         scene = module.createCaseScene(host,data,{preview}); return scene;
       } catch (_) { host.dataset.renderer='fallback'; return null; }
     }
@@ -39,7 +39,7 @@
       saving=true; $('fast-open-toggle').disabled=true;
       try { const value=await request('/api/settings','PATCH',{fast_open:!fast}); fast=value.fast_open; syncFast();
         toast(fast?'⚡ Быстрый прокрут включён':'Быстрый прокрут выключен');
-        if (fast) stopScene(); else if(selected) mountScene($('case-scene'),selected,true);
+        if(selected) mountScene($('case-scene'),selected,true);
       } catch(error) { toast(error.message); }
       finally { saving=false; $('fast-open-toggle').disabled=false; }
     }
@@ -48,15 +48,16 @@
       try {
         selected=await window.api.getCase(id); ctx.selected(selected);
         $('case-detail-image').src=selected.image; $('case-detail-image').alt=selected.name;
+        let cover=$('case-cover-thumbnail');if(!cover){cover=document.createElement('img');cover.id='case-cover-thumbnail';cover.className='case-cover-thumbnail';$('case-scene').before(cover);}cover.src=selected.image;cover.alt=selected.name;
         $('case-detail-name').textContent=selected.name; $('case-detail-description').textContent=selected.description;
         $('case-detail-price').textContent=money(selected.price); $('case-player-balance').textContent=money(ctx.user()?.balance);
         $('case-kind-label').textContent=selected.kind==='BUSINESS'?'ПРЕДПРИЯТИЯ':'КОЛЛЕКЦИЯ';
         $('open-case-button').textContent=`Открыть 1 за ${money(selected.price)}`;
         $('open-ten-cases-button').textContent=`Открыть 10 за ${money(selected.price*10)}`;
-        $('case-drop-preview').innerHTML=selected.drops.map((r)=>`<article class="drop-preview rarity-${r.rarity.toLowerCase()}"><img src="${esc(r.image)}" alt="" loading="lazy"/><strong>${esc(r.name)}</strong><small>${rarities[r.rarity]} · ${Number((r.chance*100).toFixed(3))}%</small></article>`).join('');
+        $('case-drop-preview').innerHTML=selected.drops.concat(selected.collection_additions||[]).map((r)=>`<article class="drop-preview rarity-${r.rarity.toLowerCase()}"><img src="${esc(r.image)}" alt="${esc(r.name)}" loading="lazy"/><strong>${esc(r.name)}</strong><small>${rarities[r.rarity]} · ${r.chance==null?'Распределение не утверждено':Number((r.chance*100).toFixed(3))+'%'}${r.asset_status==='missing'?' · Нет изображения':''}</small></article>`).join('')+(selected.collection_note?`<p class="currency-note">${esc(selected.collection_note)}</p>`:'');
         syncFast(); setBusy(false); ctx.openModal('case-modal');
         $('case-scene').dataset.renderer='fallback';
-        if(!fast) mountScene($('case-scene'),selected,true);
+        mountScene($('case-scene'),selected,true);
       } catch(error) { toast(error.message); }
     }
     function showChances() {
@@ -89,26 +90,50 @@
       reel.style.transform=`translate3d(${target}px,0,0)`;
       await wait(3000); winner.classList.add('is-landed');
     }
+    async function animateTen(items){
+      $('opening-stage').classList.remove('is-hidden');$('opening-result').classList.add('is-hidden');
+      $('opening-3d').classList.add('is-hidden');$('opening-reel-wrap').classList.remove('is-hidden');
+      $('opening-sequence').textContent='10 независимых результатов';
+      $('opening-status').textContent='Все награды уже сохранены сервером';
+      const host=$('opening-reel-wrap');host.classList.add('ten-reels');
+      host.innerHTML=items.map((item,index)=>{
+        const win=4+index%3,pool=selected.drops,cardList=Array.from({length:26},(_,i)=>i===win?item:pool[(i*7+index)%pool.length]);
+        return `<div class="independent-reel-wrap" data-result-id="${esc(item.result_id)}"><span class="reel-number">${index+1}</span><div class="opening-reel-marker"></div><div class="independent-reel" data-win="${win}">${cardList.map(r=>`<div class="opening-reel-card rarity-${r.rarity.toLowerCase()}"><img src="${esc(r.image)}" alt="${esc(r.name)}"><strong>${esc(r.name)}</strong></div>`).join('')}</div></div>`;
+      }).join('');
+      const reels=[...host.querySelectorAll('.independent-reel')];
+      // Begin right of the winner; travel left-to-right to the central marker.
+      reels.forEach(reel=>{reel.style.transform='translate3d(-2600px,0,0)';});
+      await new Promise(requestAnimationFrame);await new Promise(requestAnimationFrame);
+      reels.forEach((reel,index)=>{
+        const winner=reel.children[Number(reel.dataset.win)],target=reel.parentElement.clientWidth/2-winner.offsetLeft-winner.offsetWidth/2;
+        reel.style.transition=`transform ${1800+index*145}ms cubic-bezier(.12,.78,.12,1)`;
+        reel.style.transform=`translate3d(${target}px,0,0)`;
+      });
+      await wait(3200);
+      reels.forEach(reel=>reel.children[Number(reel.dataset.win)].classList.add('is-landed'));
+      host.classList.remove('ten-reels');host.innerHTML='<div class="opening-reel-marker"></div><div id="opening-reel" class="opening-reel"></div>';
+    }
     function activeItems() { return results.filter((r)=>r.kind==='ITEM' && ['AVAILABLE','KEPT'].includes(r.status)); }
     function renderResults() {
       const item=results[focus]; if(!item) return;
       $('opening-stage').classList.add('is-hidden'); $('opening-result').classList.remove('is-hidden'); $('opening-close').classList.remove('is-hidden'); $('opening-skip').classList.add('is-hidden');
       $('result-image').src=item.image; $('result-image').alt=item.name;
       $('result-name').textContent=item.name; $('result-rarity').textContent=rarities[item.rarity]; $('result-rarity').className=`rarity-label rarity-${item.rarity.toLowerCase()}`;
-      $('result-value').textContent=money(item.compensation || item.value);
+      $('result-value').textContent=money(item.compensation || item.reference_value || item.value);
       $('result-value-label').textContent=item.compensation?'Компенсация за повтор':'Стоимость';
       $('opening-result-kicker').textContent=results.length>1?`${results.length} результатов сохранено`:(item.kind==='BUSINESS'?'Предприятие получено':'Предмет получен');
       $('result-description').textContent=item.compensation?`Повторное предприятие. Начислено ${money(item.compensation)} — 50% исходной стоимости.`:item.kind==='BUSINESS'?'Предприятие доступно в разделе «Заработок».':(['AVAILABLE','KEPT'].includes(item.status)?'Предмет уже защищённо сохранён на сервере.':({SOLD:'Предмет продан',UPGRADED:'Предмет использован в апгрейде',MARKET:'Предмет выставлен на SH MARKET',TRANSFERRED:'Предмет передан покупателю'}[item.status]||item.status));
       const usable=activeItems(),chosen=usable.filter((r)=>selectedIds.has(r.result_id));
       $('result-batch').classList.toggle('is-hidden',results.length<2);
       $('result-batch').innerHTML=results.map((r,i)=>`<article class="result-mini rarity-${r.rarity.toLowerCase()} ${i===focus?'is-focused':''}"><button type="button" data-result-focus="${i}" aria-label="Посмотреть ${esc(r.name)}"><img src="${esc(r.image)}" alt=""/><strong>${esc(r.name)}</strong><small>${r.compensation?`+${money(r.compensation)}`:rarities[r.rarity]}</small></button>${r.kind==='ITEM'&&['AVAILABLE','KEPT'].includes(r.status)?`<label><input type="checkbox" data-result-select="${esc(r.result_id)}" ${selectedIds.has(r.result_id)?'checked':''}/>Выбрать</label>`:`<small>${r.kind==='BUSINESS'?'Предприятие':esc(r.status)}</small>`}</article>`).join('');
-      const sell=$('opening-sell-button'); sell.classList.toggle('is-hidden',usable.length===0); sell.disabled=activeAction||chosen.length===0; sell.textContent=results.length===1?`Продать сразу за ${money(item.value)}`:`Продать выбранные (${chosen.length}) · ${money(chosen.reduce((sum,r)=>sum+r.value,0))}`;
+      const sell=$('opening-sell-button'),canSell=chosen.length>0&&chosen.every(r=>r.sale_available!==false); sell.classList.toggle('is-hidden',usable.length===0); sell.disabled=activeAction||!canSell; sell.textContent=canSell?`Продать выбранные (${chosen.length}) · ${money(chosen.reduce((sum,r)=>sum+(r.sell_price??r.value),0))}`:'Цена выкупа выбранных предметов не утверждена';
       $('saved-button').textContent=results.length===1?'Сохранить в инвентарь':'Сохранить всё в инвентарь'; $('saved-button').disabled=activeAction;
       $('saved-button').classList.toggle('is-hidden',item.kind==='BUSINESS');
       $('result-business-button').classList.toggle('is-hidden',item.kind!=='BUSINESS');
       $('result-upgrade-button').classList.toggle('is-hidden',!supported.get(item.id)||item.kind!=='ITEM'||!['AVAILABLE','KEPT'].includes(item.status));
       $('result-upgrade-selected').classList.toggle('is-hidden',results.length<2||!chosen.some((r)=>supported.get(r.id)));
       $('result-sell-one').classList.toggle('is-hidden',results.length<2||item.kind!=='ITEM'||!['AVAILABLE','KEPT'].includes(item.status));
+      $('result-sell-one').disabled=activeAction||item.sale_available===false;
       $('result-keep-one').classList.toggle('is-hidden',results.length<2||item.kind!=='ITEM'||!['AVAILABLE','KEPT'].includes(item.status));
     }
     async function resolveSupport() {
@@ -136,8 +161,13 @@
         write(pendingKey(),null); write(resultKey(),pending.requestId); $('opening-recovery').classList.add('is-hidden');
         ctx.update({balance:response.balance,xp:response.xp,level:response.level}); ctx.closeModal('case-modal',true);
         $('opening-close').classList.add('is-hidden'); $('opening-result').classList.add('is-hidden'); $('opening-skip').classList.toggle('is-hidden',fast); ctx.openModal('opening-modal');
+        let cover=$('opening-cover-reference');if(!cover){cover=document.createElement('img');cover.id='opening-cover-reference';cover.className='opening-cover-reference';$('opening-3d').append(cover);}cover.src=selected.image;cover.alt=selected.name;
         results=response.items || [response.item];
-        if(!fast && !recover) for(let i=0;i<results.length&&!skip;i++) await animate(results[i],i,results.length);
+        if(!recover){
+          if(fast){$('opening-stage').classList.remove('is-hidden');$('opening-3d').classList.remove('is-hidden');$('opening-reel-wrap').classList.add('is-hidden');$('opening-case-image').src=selected.image;const model=await mountScene($('opening-3d'),selected,false);if(model)await model.play();}
+          else if(results.length===10)await animateTen(results);
+          else await animate(results[0],0,1);
+        }
         showResults(results);
         window.api.getMe().then(ctx.update).catch(()=>{});
       } catch(error) {
@@ -153,7 +183,7 @@
       if(!actionKey || actionKey.signature!==signature) actionKey={signature,id:uuid()};
       renderResults();
       try { const response=await request(`/api/openings/results/${kind}`,'POST',payload,actionKey.id); ctx.update({balance:response.balance}); chosen.forEach((r)=>{r.status=kind==='sell'?'SOLD':'KEPT';}); actionKey=null; toast(kind==='sell'?`Продано за ${money(response.amount)}`:'Сохранено в инвентарь');
-        if(kind==='keep'&&!one) ctx.closeModal('opening-modal',true);
+        if((kind==='keep'&&!one)||!results.some(r=>r.kind==='ITEM'&&r.status==='AVAILABLE')) ctx.closeModal('opening-modal',true);
       } catch(error) {toast(error.message);} finally {activeAction=false;renderResults();ctx.reloadInventory();}
     }
     async function upgrade(many=false) {

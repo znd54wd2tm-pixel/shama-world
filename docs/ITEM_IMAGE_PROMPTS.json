@@ -1,0 +1,312 @@
+[
+  {
+    "key": "shama_crown",
+    "output": "web/assets/items/shama_crown.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Корона SHAMA. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "tycoon_card",
+    "output": "web/assets/items/tycoon_card.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Карта магната. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "owner_key",
+    "output": "web/assets/items/owner_key.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотой ключ владельца. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "gold_skyscraper",
+    "output": "web/assets/items/gold_skyscraper.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотой небоскрёб. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "tycoon_cup",
+    "output": "web/assets/items/tycoon_cup.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Кубок магната. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "shama_badge",
+    "output": "web/assets/items/shama_badge.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Знак SHAMA. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "shama_bank",
+    "output": "web/assets/items/shama_bank.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Банк SHAMA. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: collection."
+  },
+  {
+    "key": "gold_watch",
+    "output": "web/assets/items/gold_watch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотые часы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_ring",
+    "output": "web/assets/items/gold_ring.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотое кольцо. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_bracelet",
+    "output": "web/assets/items/gold_bracelet.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотой браслет. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_coin",
+    "output": "web/assets/items/gold_coin.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотая монета. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_cufflinks",
+    "output": "web/assets/items/gold_cufflinks.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотые запонки. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "money_clip",
+    "output": "web/assets/items/money_clip.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотой зажим для денег. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_buckle",
+    "output": "web/assets/items/gold_buckle.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотая пряжка. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_glasses",
+    "output": "web/assets/items/gold_glasses.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотые очки. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_pen",
+    "output": "web/assets/items/gold_pen.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотая ручка. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_statue",
+    "output": "web/assets/items/gold_statue.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотая статуэтка. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "gold_brooch",
+    "output": "web/assets/items/gold_brooch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Золотая брошь. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "ruby",
+    "output": "web/assets/items/ruby.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Рубин. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "sapphire",
+    "output": "web/assets/items/sapphire.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Сапфир. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "emerald",
+    "output": "web/assets/items/emerald.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Изумруд. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "briefcase",
+    "output": "web/assets/items/briefcase.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Деловой портфель. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "business_watch",
+    "output": "web/assets/items/business_watch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Деловые часы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: gold."
+  },
+  {
+    "key": "neon_sneakers",
+    "output": "web/assets/items/neon_sneakers.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Неоновые кроссовки. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "gaming_headset",
+    "output": "web/assets/items/gaming_headset.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Игровая гарнитура. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "gaming_keyboard",
+    "output": "web/assets/items/gaming_keyboard.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Механическая клавиатура. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "gaming_mouse",
+    "output": "web/assets/items/gaming_mouse.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Игровая мышь. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "neon_watch",
+    "output": "web/assets/items/neon_watch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Неоновые часы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "smartphone",
+    "output": "web/assets/items/smartphone.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Смартфон. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "wireless_earbuds",
+    "output": "web/assets/items/wireless_earbuds.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Беспроводные наушники. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "tablet",
+    "output": "web/assets/items/tablet.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Электронный планшет. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "neon_jersey",
+    "output": "web/assets/items/neon_jersey.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Неоновая футбольная форма. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "purple_boots",
+    "output": "web/assets/items/purple_boots.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Фиолетовые бутсы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "silver_headphones",
+    "output": "web/assets/items/silver_headphones.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Серебристые наушники. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "controller",
+    "output": "web/assets/items/controller.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Игровой контроллер. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "glowing_glasses",
+    "output": "web/assets/items/glowing_glasses.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Светящиеся очки. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "neon_backpack",
+    "output": "web/assets/items/neon_backpack.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Неоновый рюкзак. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "neon_dollar_bundle",
+    "output": "web/assets/items/neon_dollar_bundle.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Пачка долларов. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: neon."
+  },
+  {
+    "key": "diamond",
+    "output": "web/assets/items/diamond.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Бриллиант. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "platinum_ring",
+    "output": "web/assets/items/platinum_ring.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Платиновое кольцо. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "diamond_watch",
+    "output": "web/assets/items/diamond_watch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Алмазные часы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "royal_scepter",
+    "output": "web/assets/items/royal_scepter.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Королевский скипетр. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "platinum_chain",
+    "output": "web/assets/items/platinum_chain.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Платиновая цепочка. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "royal_cup",
+    "output": "web/assets/items/royal_cup.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Королевский кубок. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "diamond_cufflinks",
+    "output": "web/assets/items/diamond_cufflinks.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Бриллиантовые запонки. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "royal_medallion",
+    "output": "web/assets/items/royal_medallion.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Королевский медальон. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "gem_watch",
+    "output": "web/assets/items/gem_watch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Роскошные часы с камнями. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "aquamarine",
+    "output": "web/assets/items/aquamarine.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Аквамарин. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "amethyst",
+    "output": "web/assets/items/amethyst.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Аметист. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "citrine",
+    "output": "web/assets/items/citrine.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Цитрин. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "garnet",
+    "output": "web/assets/items/garnet.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Гранат. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "black_onyx",
+    "output": "web/assets/items/black_onyx.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Чёрный оникс. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: royal."
+  },
+  {
+    "key": "dollars",
+    "output": "web/assets/items/dollars.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Доллары. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "iron_ingot",
+    "output": "web/assets/items/iron_ingot.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Железный слиток. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "steel_gear",
+    "output": "web/assets/items/steel_gear.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Стальная шестерня. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "leather_football",
+    "output": "web/assets/items/leather_football.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Кожаный футбольный мяч. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "bronze_cup",
+    "output": "web/assets/items/bronze_cup.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Бронзовый кубок. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "wristwatch",
+    "output": "web/assets/items/wristwatch.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Наручные часы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "leather_wallet",
+    "output": "web/assets/items/leather_wallet.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Кожаный кошелёк. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "dollar_bundle",
+    "output": "web/assets/items/dollar_bundle.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Пачка долларов. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "silver_coin",
+    "output": "web/assets/items/silver_coin.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Серебряная монета. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  },
+  {
+    "key": "football_boots",
+    "output": "web/assets/items/football_boots.png",
+    "prompt": "Use case: product-mockup. Asset type: mobile game collectible. Subject: Спортивные бутсы. One accurate fully visible object or logical pair, square 1:1, centered composition. Detailed realistic materials, recognizable shape, premium studio lighting. Clean dark charcoal-purple background. No lettering, watermark, logos or extra objects. Preserve the actual material and color of this object; do not make everything gold. Collection: starter."
+  }
+]

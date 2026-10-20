@@ -39,6 +39,9 @@ def validate(path: Path) -> None:
 
 
 def apply_config(path: Path) -> None:
+    with get_connection(path) as c:
+        if c.execute("SELECT 1 FROM finance_meta WHERE key='catalog_v16'").fetchone():
+            raise ValueError('Команда V15 apply-config отключена для V16: она заменяет утверждённые цены и пулы. Изменяйте catalog_v16.py с отдельной версионной миграцией.')
     for case in (*COLLECTION_CASES,*BUSINESS_CASES):
         if abs(sum(p for _,p in case['drops'])-1)>1e-8:
             raise ValueError(f"Неверная сумма вероятностей: {case['name']}")

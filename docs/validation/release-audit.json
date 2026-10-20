@@ -1,0 +1,16 @@
+{
+  "source_sha256": "a599cdf66c73b3fd56bad88f90c69d7804b6baa696966d446ed86efa791ba851",
+  "original_asset_count": 151,
+  "missing_original_assets": [],
+  "modified_original_assets": [],
+  "user_covers_unchanged": 5,
+  "catalog_items": 72,
+  "missing_item_images": 62,
+  "new_generated_item_images": 0,
+  "server_tests": 84,
+  "browser_checks": 53,
+  "browser_errors": [],
+  "python_syntax_files": 45,
+  "javascript_syntax_files": 14,
+  "includes_player_database": false
+}

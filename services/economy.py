@@ -161,7 +161,8 @@ def sell_item(database_path: str, user_id: int, item_id: int, quantity: int,
                 raise NotEnoughItemsError("Недостаточно предметов в инвентаре")
 
             balance_before = get_balance(connection, user_id)
-            amount = int(row["value"]) * quantity
+            from services.item_view import sale_price
+            amount = sale_price(connection,item_id) * quantity
             balance_after = add_balance(connection, user_id, amount)
             from services.operations import consume_item
             consume_item(connection, user_id, item_id, quantity, "SOLD")

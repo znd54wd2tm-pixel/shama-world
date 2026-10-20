@@ -56,14 +56,14 @@ GAME_MARKET_SEED = {
 def player_market(path: str, user_id: int) -> dict:
     """Player offers share SH MARKET with the existing NPC rotation."""
     with get_connection(path) as c:
-        rows = c.execute("""SELECT l.*,COALESCE(i.name,e.name) AS name,COALESCE(i.image,e.image) AS image,
+        rows = c.execute("""SELECT l.*,COALESCE(i.display_name,i.name,NULLIF(o.custom_name,''),e.name) AS name,COALESCE(i.image,e.image) AS image,
             COALESCE(i.rarity,e.rarity) AS rarity,o.xp_seconds,o.upgrades,
             (SELECT count(*) FROM enterprise_employees s WHERE s.enterprise_id=o.id) AS employees
             FROM player_listings l LEFT JOIN items i ON i.id=l.item_id
             LEFT JOIN owned_enterprises o ON o.id=l.enterprise_id
             LEFT JOIN enterprise_catalog e ON e.id=o.catalog_id
             WHERE l.status='ACTIVE' OR (l.seller_id=? AND l.status='SOLD') ORDER BY l.id DESC LIMIT 100""", (user_id,)).fetchall()
-        return {"listings":[dict(r) for r in rows],"commission_percent":5,"user_id":user_id}
+        return {"listings":[dict(r) for r in rows],"commission_percent":5,"enterprise_commission_percent":10,"user_id":user_id}
 
 
 def player_market_action(path: str, user_id: int, action: str, payload: dict, request_id: str | None) -> dict:
@@ -124,7 +124,7 @@ def player_market_action(path: str, user_id: int, action: str, payload: dict, re
                     raise EconomyError("Нельзя купить собственное объявление")
                 if listing["enterprise_id"]:
                     owned = load_owned(c,seller,listing["enterprise_id"])
-                    if c.execute("SELECT 1 FROM owned_enterprises WHERE user_id=? AND catalog_id=?", (user_id,owned["catalog_id"])).fetchone():
+                    if c.execute("SELECT 1 FROM owned_enterprises WHERE user_id=? AND catalog_id=? AND retired=0", (user_id,owned["catalog_id"])).fetchone():
                         raise EconomyError("У вас уже есть такое предприятие")
                 buyer_before = get_balance(c,user_id)
                 price = listing["price"]
@@ -137,12 +137,12 @@ def player_market_action(path: str, user_id: int, action: str, payload: dict, re
                     add_item(c,user_id,listing["item_id"])
                     if listing["result_id"]:
                         c.execute("UPDATE opening_results SET status='TRANSFERRED' WHERE id=?", (listing["result_id"],))
-                fee = (price*5+50)//100
+                fee = (price*10+50)//100 if listing['enterprise_id'] else (price*5+50)//100
                 seller_before = get_balance(c,seller)
                 seller_after = add_balance(c,seller,price-fee)
                 c.execute("UPDATE player_listings SET status='SOLD',buyer_id=?,fee=?,closed_at=? WHERE id=?", (user_id,fee,now.isoformat(),listing_id))
                 record_transaction(c,user_id,"MARKET_PURCHASE",price,buyer_before,buyer_after,item_id=listing["item_id"],description="Покупка в SH MARKET",metadata={"listing_id":listing_id},request_id=f"listing-buy:{listing_id}")
-                record_transaction(c,seller,"SELL",price-fee,seller_before,seller_after,item_id=listing["item_id"],description="Продажа в SH MARKET · комиссия 5%",metadata={"listing_id":listing_id,"fee":fee},request_id=f"listing-sale:{listing_id}")
+                record_transaction(c,seller,"SELL",price-fee,seller_before,seller_after,item_id=listing["item_id"],description=f"Продажа в SH MARKET · комиссия {10 if listing['enterprise_id'] else 5}%",metadata={"listing_id":listing_id,"fee":fee},request_id=f"listing-sale:{listing_id}")
                 result = {"success":True,"listing_id":listing_id,"balance":buyer_after,"fee":fee,"price":price}
         else:
             raise EconomyError("Неизвестное действие рынка")
@@ -172,7 +172,7 @@ def market_data(database_path: str, user_id: int) -> dict[str, Any]:
             (rotation["id"],),
         ).fetchall()
         return {"rotation": {"id": rotation["id"], "started_at": rotation["started_at"], "ends_at": rotation["ends_at"]},
-                "offers": [{**dict(row), "market_image": MARKET_ART.get(row["name"], row["image"])} for row in rows],
+                "offers": [{**dict(row), "market_image": row['image']} for row in rows],
                 "game_market": game_market_state(database_path, user_id)}
 
 

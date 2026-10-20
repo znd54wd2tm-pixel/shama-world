@@ -1,0 +1,13 @@
+{
+  "source": "existing local verification.sqlite3 (copy only)",
+  "preserved_rows": {
+    "users": 0,
+    "inventory": 0,
+    "transactions": 0,
+    "user_achievements": 0,
+    "owned_enterprises": 0,
+    "enterprise_employees": 0
+  },
+  "integrity_check": "ok",
+  "foreign_key_check": "ok"
+}

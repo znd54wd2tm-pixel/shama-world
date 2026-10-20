@@ -23,24 +23,27 @@ def level_for(xp_seconds: float) -> int:
 
 def award_enterprise(c: Any, user_id: int, catalog_id: int) -> tuple[int, int]:
     catalog = c.execute("SELECT * FROM enterprise_catalog WHERE id=?", (catalog_id,)).fetchone()
-    existing = c.execute("SELECT id FROM owned_enterprises WHERE user_id=? AND catalog_id=?", (user_id,catalog_id)).fetchone()
+    existing = c.execute("SELECT id,retired FROM owned_enterprises WHERE user_id=? AND catalog_id=? AND retired=0", (user_id,catalog_id)).fetchone()
     if existing:
         return int(existing["id"]), int(catalog["original_price"]) // 2
     stamp = now_utc().isoformat()
-    cursor = c.execute("INSERT INTO owned_enterprises(user_id,catalog_id,last_accrued_at,created_at) VALUES (?,?,?,?)", (user_id,catalog_id,stamp,stamp))
+    cursor = c.execute("INSERT INTO owned_enterprises(user_id,catalog_id,last_accrued_at,created_at,acquisition_cost) VALUES (?,?,?,?,?)", (user_id,catalog_id,stamp,stamp,catalog['original_price']))
     return int(cursor.lastrowid), 0
 
 
 def load_owned(c: Any, user_id: int, enterprise_id: int) -> Any:
-    row = c.execute("""SELECT o.*,e.code,e.name,e.original_price,e.revenue,e.expenses,e.capacity,e.rarity,e.image
-        FROM owned_enterprises o JOIN enterprise_catalog e ON e.id=o.catalog_id WHERE o.id=? AND o.user_id=?""", (enterprise_id,user_id)).fetchone()
+    row = c.execute("""SELECT o.*,e.code,e.name,e.original_price,e.revenue,e.expenses,e.capacity,e.rarity,e.image,e.equipment_required,e.no_upgrades
+        FROM owned_enterprises o JOIN enterprise_catalog e ON e.id=o.catalog_id WHERE o.id=? AND o.user_id=? AND o.retired=0""", (enterprise_id,user_id)).fetchone()
     if not row:
         raise EconomyError("Предприятие не найдено или принадлежит другому игроку")
     return row
 
 
 def staff(c: Any, enterprise_id: int) -> list[dict]:
-    return [dict(r) for r in c.execute("SELECT * FROM enterprise_employees WHERE enterprise_id=? ORDER BY id", (enterprise_id,))]
+    result=[dict(r) for r in c.execute("SELECT * FROM enterprise_employees WHERE enterprise_id=? ORDER BY id", (enterprise_id,))]
+    for row in result:
+        if row.get('employee_grade')=='experienced':row['role']='experienced'
+    return result
 
 
 def rates(row: Any, employees: list[dict], xp: Decimal | None = None) -> dict[str, Decimal]:
@@ -51,6 +54,13 @@ def rates(row: Any, employees: list[dict], xp: Decimal | None = None) -> dict[st
     revenue = D(row["revenue"]) * (1 + bonus) * (1 if employees else D('.5'))
     expenses = D(row["expenses"]) * max(D(0), 1-effect("premises")-effect("automation")) * (1 if employees else D('.7'))
     wages = sum((D(e["salary"]) for e in employees), D(0))
+    if row['code']=='kiosk':
+        revenue=D(row['revenue']) if employees else D(0)
+    if row['equipment_required']:
+        from catalog_v16 import COFFEE_EQUIPMENT
+        equipment=json.loads(row['equipment'])
+        if not all(equipment.get(k) for k in COFFEE_EQUIPMENT):
+            revenue=D(0);expenses=D(0)
     return {"revenue":revenue,"expenses":expenses,"wages":wages,"profit":revenue-expenses-wages,"bonus":bonus}
 
 
@@ -98,11 +108,20 @@ def settle(c: Any, user_id: int, enterprise_id: int, now: datetime | None = None
     integer_balance = max(0,int(available.to_integral_value(rounding=ROUND_FLOOR)))
     remainder = max(D(0),available-D(integer_balance))
     credited = integer_balance-before
+    saved=0
+    setting=c.execute('SELECT auto_savings FROM finance_accounts WHERE user_id=?',(user_id,)).fetchone()
+    if credited>0 and row['savings_enabled'] and setting and setting[0]:
+        share=D(credited)*D('.20')+D(row['savings_remainder'])
+        saved=int(share.to_integral_value(rounding=ROUND_FLOOR));integer_balance-=saved
+        c.execute('UPDATE finance_accounts SET savings=savings+? WHERE user_id=?',(saved,user_id))
+        c.execute('UPDATE owned_enterprises SET savings_remainder=? WHERE id=?',(str(share-saved),enterprise_id))
     c.execute("UPDATE users SET balance=? WHERE id=?", (integer_balance,user_id))
     c.execute("""UPDATE owned_enterprises SET xp_seconds=?,work_seconds=?,money_remainder=?,last_accrued_at=?,status=?,pause_reason=? WHERE id=?""",
               (float(xp),float(work),str(remainder),now.isoformat(),"PAUSED" if paused else "RUNNING","Недостаточно средств на расходы и зарплату" if paused else "",enterprise_id))
     if running:
-        record_transaction(c,user_id,"OTHER",abs(credited),before,integer_balance,description=f"Работа: {row['name']}",metadata={"enterprise_id":enterprise_id,"seconds":float(running),"offline_cap_hours":OFFLINE_HOURS,**{k:float(v) for k,v in totals.items()}},request_id=None)
+        record_transaction(c,user_id,"OTHER",abs(credited),before,integer_balance,description=f"Работа: {row['name']}",metadata={"enterprise_id":enterprise_id,"seconds":float(running),"offline_cap_hours":OFFLINE_HOURS,'auto_saved':saved,**{k:float(v) for k,v in totals.items()}},request_id=None)
+    if saved:
+        record_transaction(c,user_id,'OTHER',saved,integer_balance,integer_balance,description='Автоматические накопления',metadata={'enterprise_id':enterprise_id,'internal_transfer':True},request_id=None)
     return {"credited":credited,"seconds":float(running),"paused":paused}
 
 
@@ -116,7 +135,7 @@ def enterprise_payload(c: Any, row: Any) -> dict:
     level = level_for(row["xp_seconds"])
     upgrades = json.loads(row["upgrades"])
     options = []
-    for key, config in UPGRADES.items():
+    for key, config in ({} if row['no_upgrades'] else UPGRADES).items():
         current = upgrades[key]
         options.append({"key":key,"name":config["name"],"level":current,"effect":config["effects"][current-1] if current else 0,
                         "next_level":current+1 if current < 3 else None,
@@ -124,7 +143,10 @@ def enterprise_payload(c: Any, row: Any) -> dict:
                         "required_level":config["levels"][current] if current < 3 else None,
                         "next_effect":config["effects"][current] if current < 3 else None})
     roles = [{"role":key,**config,"hire_cost":int(config["hire_cost"]),"salary":int(config["salary"])} for key,config in EMPLOYEES.items()]
-    return {**dict(row),"level":level,"employees":employees,"employee_count":len(employees),"upgrades":options,"roles":roles,
+    from catalog_v16 import COFFEE_EQUIPMENT
+    from services.finance import enterprise_value
+    equipment=json.loads(row['equipment'])
+    return {**dict(row),'name':row['custom_name'] or row['name'],'equipment_options':[{'key':k,'name':v[0],'price':v[1],'owned':bool(equipment.get(k))} for k,v in COFFEE_EQUIPMENT.items()] if row['equipment_required'] else [],'state_buyback':enterprise_value(c,row)//5,"level":level,"employees":employees,"employee_count":len(employees),"upgrades":options,"roles":roles,
             "next_level_hours":LEVEL_HOURS[level] if level<5 else None,"xp_hours":float(D(row["xp_seconds"])/HOUR),
             "work_hours":float(D(row["work_seconds"])/HOUR),"listed":is_listed(c,row["id"]),"premium":level==5,
             "hourly":{key:round(float(value),4) for key,value in rate.items()}}
@@ -133,7 +155,7 @@ def enterprise_payload(c: Any, row: Any) -> dict:
 def business_state(path: str, user_id: int) -> dict:
     with get_connection(path) as c:
         c.execute("BEGIN IMMEDIATE")
-        ids = [r[0] for r in c.execute("SELECT id FROM owned_enterprises WHERE user_id=? ORDER BY id", (user_id,))]
+        ids = [r[0] for r in c.execute("SELECT id FROM owned_enterprises WHERE user_id=? AND retired=0 ORDER BY id", (user_id,))]
         now = now_utc()
         income = sum(settle(c,user_id,i,now)["credited"] for i in ids)
         enterprises = [enterprise_payload(c,load_owned(c,user_id,i)) for i in ids]
@@ -159,7 +181,7 @@ def business_action(path: str, user_id: int, enterprise_id: int, action: str, pa
             catalog = c.execute("SELECT * FROM enterprise_catalog WHERE id=?", (enterprise_id,)).fetchone()
             if not catalog:
                 raise EconomyError("Предприятие не найдено")
-            if c.execute("SELECT 1 FROM owned_enterprises WHERE user_id=? AND catalog_id=?", (user_id,enterprise_id)).fetchone():
+            if c.execute("SELECT 1 FROM owned_enterprises WHERE user_id=? AND catalog_id=? AND retired=0", (user_id,enterprise_id)).fetchone():
                 raise EconomyError("У вас уже есть такое предприятие")
             cost = catalog["original_price"]
             remove_balance(c,user_id,cost)
@@ -177,6 +199,31 @@ def business_action(path: str, user_id: int, enterprise_id: int, action: str, pa
                 if status not in ("RUNNING","PAUSED"):
                     raise EconomyError("Некорректный статус")
                 c.execute("UPDATE owned_enterprises SET status=?,pause_reason='' WHERE id=?", (status,owned_id))
+            elif action=='rename':
+                name=payload.get('name')
+                if not isinstance(name,str) or not 1<=len(name.strip())<=60 or any(ord(ch)<32 for ch in name):raise EconomyError('Название: от 1 до 60 символов')
+                c.execute('UPDATE owned_enterprises SET custom_name=? WHERE id=?',(name.strip(),owned_id))
+            elif action=='savings':
+                if type(payload.get('enabled')) is not bool:raise EconomyError('Некорректная настройка накоплений')
+                c.execute('UPDATE owned_enterprises SET savings_enabled=? WHERE id=?',(int(payload['enabled']),owned_id))
+            elif action=='equipment':
+                from catalog_v16 import COFFEE_EQUIPMENT
+                equipment=json.loads(row['equipment']);part=payload.get('key')
+                if not row['equipment_required'] or part not in COFFEE_EQUIPMENT:raise EconomyError('Оборудование не найдено')
+                if equipment.get(part):raise EconomyError('Оборудование уже куплено')
+                cost=COFFEE_EQUIPMENT[part][1];remove_balance(c,user_id,cost);equipment[part]=True
+                c.execute('UPDATE owned_enterprises SET equipment=? WHERE id=?',(json.dumps(equipment),owned_id))
+            elif action=='state-sale':
+                if payload.get('confirmed') is not True:raise EconomyError('Подтвердите продажу государству за 20% расчётной стоимости')
+                from services.finance import enterprise_value
+                amount=enterprise_value(c,row)//5
+                c.execute("UPDATE owned_enterprises SET retired=1,status='PAUSED' WHERE id=?",(owned_id,))
+                c.execute("UPDATE opening_results SET status='TRANSFERRED' WHERE enterprise_id=? AND status IN ('AVAILABLE','KEPT')",(owned_id,))
+                c.execute('DELETE FROM enterprise_employees WHERE enterprise_id=?',(owned_id,))
+                c.execute('UPDATE users SET balance=balance+? WHERE id=?',(amount,user_id))
+                record_transaction(c,user_id,'SELL',amount,before,before+amount,description='Государственный выкуп предприятия',metadata={'enterprise_id':owned_id,'snapshot':dict(row)},request_id=f'business:{key}')
+                result={'success':True,'balance':before+amount,'amount':amount,'retired_id':owned_id}
+                receipt(c,user_id,key,'business',data,result);c.commit();return result
             elif action == "hire":
                 role = payload.get("role","worker")
                 if role not in EMPLOYEES:
@@ -194,12 +241,13 @@ def business_action(path: str, user_id: int, enterprise_id: int, action: str, pa
                 # The original V15 schema supports worker/manager roles. Store experienced hires as workers,
                 # while preserving their agreed salary and revenue bonus in the employee row.
                 stored_role = "manager" if role == "manager" else "worker"
-                c.execute("INSERT INTO enterprise_employees(enterprise_id,role,salary,bonus,hired_at) VALUES (?,?,?,?,?)", (owned_id,stored_role,int(config["salary"]),config["bonus"],now_utc().isoformat()))
+                c.execute("INSERT INTO enterprise_employees(enterprise_id,role,salary,bonus,hired_at,employee_grade) VALUES (?,?,?,?,?,?)", (owned_id,stored_role,int(config["salary"]),config["bonus"],now_utc().isoformat(),'experienced' if role=='experienced' else ''))
             elif action == "fire":
                 employee_id = payload.get("employee_id")
                 if type(employee_id) is not int or c.execute("DELETE FROM enterprise_employees WHERE id=? AND enterprise_id=?", (employee_id,owned_id)).rowcount != 1:
                     raise EconomyError("Сотрудник не найден")
             elif action == "upgrade":
+                if row['no_upgrades']:raise EconomyError('Для уличного киоска улучшения не предусмотрены')
                 direction, target = payload.get("direction"), payload.get("level")
                 if direction not in UPGRADES or type(target) is not int or not 1 <= target <= 3:
                     raise EconomyError("Некорректное улучшение")

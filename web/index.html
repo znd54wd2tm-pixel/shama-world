@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b0a" />
+  <meta name="theme-color" content="#08060f" />
   <title>SHAMA WORLD</title>
   <link rel="icon" href="/assets/shama-world-icon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,9 +25,9 @@
   <link rel="stylesheet" href="/css/v11_gold_identity.css?v=2026-09-29-gold1" />
   <link rel="stylesheet" href="/css/v12_bank.css?v=2026-09-29-bank2" />
   <link rel="stylesheet" href="/css/v13_black_gold_polish.css?v=2026-09-30-gold2" />
-  <link rel="stylesheet" href="/css/v14_shama_works.css?v=2026-10-16-v15" />
+  <link rel="stylesheet" href="/css/v14_shama_works.css?v=16.1" />
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="stylesheet" href="/css/v15_economy.css?v=15" /></head>
+<link rel="stylesheet" href="/css/v15_economy.css?v=15" /><link rel="stylesheet" href="/css/v16_world.css?v=16.1" /></head>
 <body>
   <div class="ambient-bg" aria-hidden="true"><span class="ambient-orb orb-a"></span><span class="ambient-orb orb-b"></span><span class="ambient-grid"></span></div>
   <div id="loading-screen" class="loading-screen">
@@ -66,7 +66,7 @@
     </nav>
 
     <div class="app-content">
-      <section id="page-world" class="page is-active world-page-static">
+      <section id="page-world" class="page is-active world-page-static"><div id="world-dashboard" class="world-dashboard" aria-live="polite"></div>
         <section class="world-city-panel" data-parallax-scene aria-label="SHAMA WORLD — ночной город">
           <div class="world-city-sky" data-depth="0.08"><span class="city-star star-a"></span><span class="city-star star-b"></span><span class="city-star star-c"></span></div>
           <div class="world-city-haze" data-depth="0.16"></div>
@@ -93,9 +93,9 @@
       </section>
 
       <section id="page-earn" class="page">
-        <div class="page-heading"><div><p class="eyebrow accent">YOUR ECONOMY</p><h1>SHAMA WORKS</h1></div><span id="earnings-balance" class="balance-chip">◈ — SH</span></div>
+        <div class="page-heading"><div><p class="eyebrow accent">YOUR ECONOMY</p><h1>Заработок</h1></div><span id="earnings-balance" class="balance-chip">◈ — SH</span></div>
         <p class="muted page-lead">Строй экономику города: работай, инвестируй и развивай активы.</p>
-        <div id="businesses-root" aria-live="polite"></div><div id="works-root" aria-live="polite"></div>
+        <button type="button" class="button button-primary" data-open-finance>Открыть банк</button><div id="businesses-root" aria-live="polite"></div><div id="works-root" aria-live="polite"></div>
         <!-- Compatibility nodes keep pre-existing API code alive while the old
              passive-income interface is no longer rendered to players. -->
         <div class="works-legacy-sink" aria-hidden="true">
@@ -106,8 +106,8 @@
 
       <section id="page-inventory" class="page">
         <div class="page-heading"><div><p class="eyebrow accent">YOUR COLLECTION</p><h1>Инвентарь</h1></div><div class="page-balance-stack"><span id="inventory-balance" class="balance-chip">◈ — SH</span><span id="inventory-count" class="badge badge-muted">0 предметов</span></div></div>
-        <div class="inventory-toolbar"><div class="filter-row inventory-filters"><button class="filter-button is-active" data-inventory-filter="ALL">ВСЕ</button><button class="filter-button" data-inventory-filter="COMMON">COMMON</button><button class="filter-button" data-inventory-filter="UNCOMMON">UNCOMMON</button><button class="filter-button" data-inventory-filter="RARE">RARE</button><button class="filter-button" data-inventory-filter="EPIC">EPIC</button><button class="filter-button" data-inventory-filter="LEGENDARY">LEGENDARY</button><button class="filter-button" data-inventory-filter="MYTHIC">MYTHIC</button></div></div>
-        <div id="inventory-grid" class="inventory-grid"></div>
+        <div class="inventory-toolbar"><div class="filter-row inventory-filters"><button class="filter-button is-active" data-inventory-filter="ALL">ВСЕ</button><button class="filter-button" data-inventory-filter="COMMON">Обычные</button><button class="filter-button" data-inventory-filter="UNCOMMON">Необычные</button><button class="filter-button" data-inventory-filter="RARE">Редкие</button><button class="filter-button" data-inventory-filter="EPIC">Эпические</button><button class="filter-button" data-inventory-filter="LEGENDARY">Легендарные</button><button class="filter-button" data-inventory-filter="MYTHIC">Мифические</button></div></div>
+        <div id="inventory-grid" class="inventory-grid"></div><details class="collection-panel"><summary>Коллекция магната</summary><div id="collection-grid" class="inventory-grid"></div></details>
         <div id="inventory-empty" class="empty-state is-hidden"><div class="empty-icon">◇</div><h2>Инвентарь пуст</h2><p class="muted">Открой первый кейс, чтобы получить предмет.</p><button class="button button-primary" data-nav="cases">ОТКРЫТЬ КЕЙС</button></div>
       </section>
 
@@ -209,7 +209,7 @@
   <div id="item-modal" class="modal-backdrop is-hidden"><div class="modal item-modal"><button class="modal-close" data-close-modal="item-modal">×</button><img id="item-detail-image" class="item-detail-image" alt="" /><h2 id="item-detail-name"></h2><span id="item-detail-rarity" class="rarity-label"></span><div class="item-detail-stats"><span>VALUE <strong id="item-detail-value"></strong> SH</span><span>QUANTITY <strong id="item-detail-quantity"></strong></span></div><p id="item-detail-description" class="muted"></p><div class="future-actions"><button class="button button-secondary" data-action="sell-item">ПРОДАТЬ</button><button class="button button-primary" data-action="upgrade-item">АПГРЕЙД</button></div></div></div>
   <div id="sell-modal" class="modal-backdrop is-hidden"><div class="modal sell-modal"><button class="modal-close" data-close-modal="sell-modal">×</button><div class="modal-eyebrow">SELL ITEM</div><img id="sell-image" class="item-detail-image" alt="" /><h2 id="sell-name"></h2><div id="sell-price" class="sell-unit-price"></div><div class="quantity-label">QUANTITY</div><div class="quantity-control"><button id="sell-minus" type="button">−</button><input id="sell-quantity" type="number" min="1" step="1" value="1" inputmode="numeric" /><button id="sell-plus" type="button">+</button></div><button id="sell-max" type="button" class="max-button">MAX</button><div class="sell-total"><span>TOTAL</span><strong id="sell-total-value">$0</strong></div><div class="future-actions"><button class="button button-secondary" data-close-modal="sell-modal">CANCEL</button><button id="confirm-sell-button" class="button button-primary">SELL</button></div></div></div>
   <div id="upgrade-source-modal" class="modal-backdrop is-hidden"><div class="modal picker-modal"><button class="modal-close" data-close-modal="upgrade-source-modal">×</button><div class="modal-eyebrow">SOURCE</div><h2>Выбери предмет</h2><div id="upgrade-source-picker" class="picker-grid"></div></div></div>
-  <div id="upgrade-target-modal" class="modal-backdrop is-hidden"><div class="modal picker-modal"><button class="modal-close" data-close-modal="upgrade-target-modal">×</button><div class="modal-eyebrow">TARGET</div><h2>Выбери цель</h2><div class="filter-row"><button class="filter-button is-active" data-rarity-filter="ALL">ALL</button><button class="filter-button" data-rarity-filter="COMMON">COMMON</button><button class="filter-button" data-rarity-filter="UNCOMMON">UNCOMMON</button><button class="filter-button" data-rarity-filter="RARE">RARE</button><button class="filter-button" data-rarity-filter="EPIC">EPIC</button><button class="filter-button" data-rarity-filter="LEGENDARY">LEGENDARY</button><button class="filter-button" data-rarity-filter="MYTHIC">MYTHIC</button></div><select id="target-sort" class="sort-select"><option value="asc">PRICE LOW → HIGH</option><option value="desc">PRICE HIGH → LOW</option></select><div id="upgrade-target-picker" class="picker-grid"></div></div></div>
+  <div id="upgrade-target-modal" class="modal-backdrop is-hidden"><div class="modal picker-modal"><button class="modal-close" data-close-modal="upgrade-target-modal">×</button><div class="modal-eyebrow">TARGET</div><h2>Выбери цель</h2><div class="filter-row"><button class="filter-button is-active" data-rarity-filter="ALL">ALL</button><button class="filter-button" data-rarity-filter="COMMON">Обычные</button><button class="filter-button" data-rarity-filter="UNCOMMON">Необычные</button><button class="filter-button" data-rarity-filter="RARE">Редкие</button><button class="filter-button" data-rarity-filter="EPIC">Эпические</button><button class="filter-button" data-rarity-filter="LEGENDARY">Легендарные</button><button class="filter-button" data-rarity-filter="MYTHIC">Мифические</button></div><select id="target-sort" class="sort-select"><option value="asc">PRICE LOW → HIGH</option><option value="desc">PRICE HIGH → LOW</option></select><div id="upgrade-target-picker" class="picker-grid"></div></div></div>
   <div id="upgrade-confirm-modal" class="modal-backdrop is-hidden"><div class="modal confirm-modal"><button class="modal-close" data-close-modal="upgrade-confirm-modal">×</button><div class="modal-eyebrow">FINAL CHECK</div><h2>YOU ARE RISKING</h2><div id="confirm-source" class="confirm-line"></div><div class="confirm-arrow">↓</div><div class="modal-eyebrow">FOR</div><div id="confirm-target" class="confirm-line"></div><div class="confirm-chance">SUCCESS CHANCE: <strong id="confirm-chance"></strong></div><div class="future-actions"><button class="button button-secondary" data-close-modal="upgrade-confirm-modal">CANCEL</button><button id="confirm-upgrade-button" class="button button-primary">CONFIRM UPGRADE</button></div></div></div>
   <div id="upgrade-result-modal" class="modal-backdrop is-hidden"><div id="upgrade-result-box" class="modal upgrade-result-modal"><div id="upgrade-result-icon" class="result-icon">✓</div><div id="upgrade-result-title" class="modal-eyebrow">UPGRADE SUCCESS</div><h2 id="upgrade-result-name"></h2><div id="upgrade-result-route" class="result-route"></div><p id="upgrade-result-description" class="muted"></p><button class="button button-primary" data-close-modal="upgrade-result-modal">CONTINUE</button></div></div>
   <div id="mission-modal" class="modal-backdrop is-hidden">
@@ -223,6 +223,7 @@
   </div>
 
   <div id="toast" class="toast is-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
-  <script src="/js/api.js?v=2026-10-16-v15"></script><script src="/js/case-ui.js?v=15"></script><script src="/js/app.js?v=2026-10-16-v15"></script><script src="/js/works.js?v=2026-10-16-v15"></script><script src="/js/game-market.js?v=2026-10-16-v15"></script><script src="/js/bank-dashboard.js?v=2026-09-29-bank2"></script><script src="/js/navigation-fix.js"></script><script src="/js/business-ui.js?v=15"></script>
+  <script src="/js/api.js?v=16.1"></script><script src="/js/case-ui.js?v=16.1"></script><script src="/js/app.js?v=16.1"></script><script src="/js/works.js?v=16.1"></script><script src="/js/game-market.js?v=16.1"></script><script src="/js/bank-dashboard.js?v=2026-09-29-bank2"></script><script src="/js/navigation-fix.js"></script><script src="/js/business-ui.js?v=16.1"></script>
+<script src="/js/finance-ui.js?v=16.1"></script><script src="/js/world-dashboard.js?v=16.1"></script>
 </body>
 </html>

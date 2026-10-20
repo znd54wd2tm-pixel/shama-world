@@ -1,0 +1,16 @@
+{
+  "actual_server_process_restart": true,
+  "compared_tables": {
+    "users": 1,
+    "inventory": 6,
+    "opening_results": 11,
+    "finance_stock_lots": 0,
+    "finance_deposits": 1,
+    "enterprise_employees": 1,
+    "owned_enterprises": 2
+  },
+  "changed_tables": [],
+  "integrity_check": "ok",
+  "foreign_key_check": [],
+  "health_status": "ok"
+}

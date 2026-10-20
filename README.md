@@ -1,8 +1,8 @@
 # SHAMA WORLD
 
-Обновление V15: инструкции, параметры экономики и результаты проверок находятся в
-[README_V15_RU.md](README_V15_RU.md) и [REPORT_V15.md](REPORT_V15.md).
-Старые разделы ниже сохранены для описания прежних модулей; актуальное открытие — 1 и 10 кейсов.
+Обновление V16: актуальные инструкции находятся в [README_V16_RU.md](README_V16_RU.md),
+результаты и незавершённые пункты — в [REPORT_V16_RU.md](REPORT_V16_RU.md).
+Документы V15 и разделы ниже сохранены как справка о прежних модулях; актуальное открытие — 1 и 10 кейсов.
 
 Telegram Mini App foundation with cases, weighted drops, inventory and SQLite-backed progression.
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sqlite3
 from typing import Any
+from urllib.parse import urlparse
 
 try:
     from database import get_connection
@@ -26,4 +27,9 @@ def get_or_create_user(database_path: str, telegram_user: dict[str, Any]) -> dic
             )
             connection.commit()
             row = connection.execute("SELECT * FROM users WHERE telegram_id = ?", (telegram_id,)).fetchone()
+        photo=telegram_user.get('photo_url')
+        if isinstance(photo,str) and len(photo)<=2000 and urlparse(photo).scheme=='https':
+            connection.execute('UPDATE users SET photo_url=? WHERE id=?',(photo,row['id']))
+            connection.commit()
+            row=connection.execute('SELECT * FROM users WHERE id=?',(row['id'],)).fetchone()
         return serialize_user(row)

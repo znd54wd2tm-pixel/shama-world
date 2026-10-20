@@ -57,9 +57,12 @@ def calculate_chance(source_value: int, target_value: int) -> float:
 
 
 def _item(row: Any, *, quantity: int | None = None) -> dict[str, Any]:
+    from services.item_view import present
+    view=present(row)
     result = {
-        "id": row["id"], "name": row["name"], "description": row["description"],
+        "id": row["id"], "name": view["name"], "description": row["description"],
         "rarity": row["rarity"], "value": row["value"], "image": row["image"],
+        'reference_value':view.get('reference_value',row['value']),'sell_price':view.get('sell_price'),'sale_available':view['sale_available'],
     }
     if quantity is not None:
         result["quantity"] = quantity

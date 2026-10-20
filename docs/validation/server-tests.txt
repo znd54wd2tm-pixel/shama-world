@@ -1,0 +1,93 @@
+C:\Users\����\Documents\ChatGPT\bot\shama-world-main\.test-data\venv312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_database_error_safe_response_and_retry (test_api.HttpTests.test_database_error_safe_response_and_retry) ... ok
+test_fast_mode_uses_identical_server_draw_rules (test_api.HttpTests.test_fast_mode_uses_identical_server_draw_rules) ... ok
+test_invalid_payloads_and_case_unavailable (test_api.HttpTests.test_invalid_payloads_and_case_unavailable) ... ok
+test_production_authentication (test_api.HttpTests.test_production_authentication) ... ok
+test_server_fast_setting_default_toggle_and_restart (test_api.HttpTests.test_server_fast_setting_default_toggle_and_restart) ... ok
+test_ten_recovery_and_disallowed_client_results (test_api.HttpTests.test_ten_recovery_and_disallowed_client_results) ... ok
+test_approved_business_catalog_has_14_rows (test_game_economy.ApprovedCatalogTests.test_approved_business_catalog_has_14_rows) ... ok
+test_approved_case_names_prices_and_probabilities (test_game_economy.ApprovedCatalogTests.test_approved_case_names_prices_and_probabilities) ... ok
+test_employee_configuration_matches_spec (test_game_economy.ApprovedCatalogTests.test_employee_configuration_matches_spec) ... ok
+test_missing_auth_fails_closed (test_game_economy.AuthTests.test_missing_auth_fails_closed) ... ok
+test_signed_telegram_data_and_forgery (test_game_economy.AuthTests.test_signed_telegram_data_and_forgery) ... ok
+test_all_pools_sum_to_one_and_legacy_weights_preserved (test_game_economy.GameTests.test_all_pools_sum_to_one_and_legacy_weights_preserved) ... ok
+test_batch_sell_and_individual_selection (test_game_economy.GameTests.test_batch_sell_and_individual_selection) ... ok
+test_bonus_cap_and_nonnegative_expenses (test_game_economy.GameTests.test_bonus_cap_and_nonnegative_expenses) ... ok
+test_business_cases_archived_without_deleting_catalogue (test_game_economy.GameTests.test_business_cases_archived_without_deleting_catalogue) ... ok
+test_business_sale_retains_staff_upgrades_and_checkpoint (test_game_economy.GameTests.test_business_sale_retains_staff_upgrades_and_checkpoint) ... ok
+test_cancel_listing_unlocks_exact_item (test_game_economy.GameTests.test_cancel_listing_unlocks_exact_item) ... ok
+test_capacity_and_manager_unlock (test_game_economy.GameTests.test_capacity_and_manager_unlock) ... ok
+test_concurrent_market_buy_only_one_transfer (test_game_economy.GameTests.test_concurrent_market_buy_only_one_transfer) ... ok
+test_concurrent_same_request_charged_once (test_game_economy.GameTests.test_concurrent_same_request_charged_once) ... ok
+test_database_failure_rolls_back_charge_and_rewards (test_game_economy.GameTests.test_database_failure_rolls_back_charge_and_rewards) ... ok
+test_database_rejects_negative_balance (test_game_economy.GameTests.test_database_rejects_negative_balance) ... ok
+test_fractional_intervals_are_not_lost (test_game_economy.GameTests.test_fractional_intervals_are_not_lost) ... ok
+test_generic_sale_marks_reward_consumed (test_game_economy.GameTests.test_generic_sale_marks_reward_consumed) ... ok
+test_hire_salary_and_fire_settle_at_old_rate (test_game_economy.GameTests.test_hire_salary_and_fire_settle_at_old_rate) ... ok
+test_history_contains_status_after_sell (test_game_economy.GameTests.test_history_contains_status_after_sell) ... ok
+test_insufficient_balance_leaves_no_partial_batch (test_game_economy.GameTests.test_insufficient_balance_leaves_no_partial_batch) ... ok
+test_insufficient_operating_funds_suspend_without_negative_balance (test_game_economy.GameTests.test_insufficient_operating_funds_suspend_without_negative_balance) ... ok
+test_invalid_pool_rolls_back (test_game_economy.GameTests.test_invalid_pool_rolls_back) ... ok
+test_invalid_snapshot_restore_rolls_back (test_game_economy.GameTests.test_invalid_snapshot_restore_rolls_back) ... ok
+test_item_market_escrow_cancel_and_fee (test_game_economy.GameTests.test_item_market_escrow_cancel_and_fee) ... sale_item_unavailable user_id=1 item_id=143
+ok
+test_key_cannot_change_case_or_quantity (test_game_economy.GameTests.test_key_cannot_change_case_or_quantity) ... ok
+test_keys_are_scoped_to_player (test_game_economy.GameTests.test_keys_are_scoped_to_player) ... ok
+test_level_thresholds (test_game_economy.GameTests.test_level_thresholds) ... ok
+test_market_not_enough_money_or_duplicate_owner_rollback (test_game_economy.GameTests.test_market_not_enough_money_or_duplicate_owner_rollback) ... ok
+test_migration_backup_preserves_real_legacy_rows (test_game_economy.GameTests.test_migration_backup_preserves_real_legacy_rows) ... ok
+test_new_player_creation_race (test_game_economy.GameTests.test_new_player_creation_race) ... ok
+test_no_staff_coffee_example (test_game_economy.GameTests.test_no_staff_coffee_example) ... ok
+test_offline_cap_and_no_repeat (test_game_economy.GameTests.test_offline_cap_and_no_repeat) ... ok
+test_paused_business_no_income_or_experience (test_game_economy.GameTests.test_paused_business_no_income_or_experience) ... ok
+test_purchase_duplicate_business_rejected (test_game_economy.GameTests.test_purchase_duplicate_business_rejected) ... ok
+test_real_legacy_schema_and_idempotency_survive_migration (test_game_economy.GameTests.test_real_legacy_schema_and_idempotency_survive_migration) ... ok
+test_restore_old_cloud_snapshot_before_new_catalog (test_game_economy.GameTests.test_restore_old_cloud_snapshot_before_new_catalog) ... ok
+test_retry_returns_exact_snapshot (test_game_economy.GameTests.test_retry_returns_exact_snapshot) ... ok
+test_save_and_sell_exact_result_once (test_game_economy.GameTests.test_save_and_sell_exact_result_once) ... ok
+test_seed_keeps_catalog_ids_custom_prices_and_weights (test_game_economy.GameTests.test_seed_keeps_catalog_ids_custom_prices_and_weights) ... ok
+test_single_open_is_persisted (test_game_economy.GameTests.test_single_open_is_persisted) ... ok
+test_ten_one_payment_ten_independent_rows (test_game_economy.GameTests.test_ten_one_payment_ten_independent_rows) ... ok
+test_unavailable_case (test_game_economy.GameTests.test_unavailable_case) ... ok
+test_upgrade_marks_reward_and_replay_no_extra_consumption (test_game_economy.GameTests.test_upgrade_marks_reward_and_replay_no_extra_consumption) ... ok
+test_upgrade_price_effect_and_sequential_levels (test_game_economy.GameTests.test_upgrade_price_effect_and_sequential_levels) ... ok
+test_weight_boundaries (test_game_economy.GameTests.test_weight_boundaries) ... ok
+test_achievement_xp_awarded_once (test_v16.V16Tests.test_achievement_xp_awarded_once) ... ok
+test_auto_savings_conservation_and_restart (test_v16.V16Tests.test_auto_savings_conservation_and_restart) ... ok
+test_card_does_not_inflate_capital_and_discounts_fee (test_v16.V16Tests.test_card_does_not_inflate_capital_and_discounts_fee) ... ok
+test_catalog_sizes_and_user_images (test_v16.V16Tests.test_catalog_sizes_and_user_images) ... ok
+test_coffee_equipment_purchase_and_no_duplicate (test_v16.V16Tests.test_coffee_equipment_purchase_and_no_duplicate) ... ok
+test_concurrent_deposit_same_key_one_debit (test_v16.V16Tests.test_concurrent_deposit_same_key_one_debit) ... ok
+test_crypto_stale_quotes_block_and_fresh_virtual_trade (test_v16.V16Tests.test_crypto_stale_quotes_block_and_fresh_virtual_trade) ... ok
+test_deposit_full_term_and_retry (test_v16.V16Tests.test_deposit_full_term_and_retry) ... ok
+test_dividends_largest_remainders_and_once (test_v16.V16Tests.test_dividends_largest_remainders_and_once) ... ok
+test_early_deposit_preserves_principal_and_75_percent_interest (test_v16.V16Tests.test_early_deposit_preserves_principal_and_75_percent_interest) ... ok
+test_experienced_employee_preserves_role_and_salary (test_v16.V16Tests.test_experienced_employee_preserves_role_and_salary) ... ok
+test_expired_vip_discount_cannot_be_retained_by_skipping_state (test_v16.V16Tests.test_expired_vip_discount_cannot_be_retained_by_skipping_state) ... ok
+test_goals_baseline_requires_new_capital_growth (test_v16.V16Tests.test_goals_baseline_requires_new_capital_growth) ... ok
+test_idempotency_fingerprint_and_authorship (test_v16.V16Tests.test_idempotency_fingerprint_and_authorship) ... ok
+test_kiosk_worker_and_no_upgrades (test_v16.V16Tests.test_kiosk_worker_and_no_upgrades) ... ok
+test_legacy_client_liabilities_offset_invested_bank_assets (test_v16.V16Tests.test_legacy_client_liabilities_offset_invested_bank_assets) ... ok
+test_legacy_deposit_preserves_terms_and_cannot_pay_twice (test_v16.V16Tests.test_legacy_deposit_preserves_terms_and_cannot_pay_twice) ... ok
+test_legacy_savings_withdrawal_and_loan_source_priority (test_v16.V16Tests.test_legacy_savings_withdrawal_and_loan_source_priority) ... ok
+test_loan_fixed_debt_restructure_autopay_partial_no_duplicate (test_v16.V16Tests.test_loan_fixed_debt_restructure_autopay_partial_no_duplicate) ... ok
+test_missing_stock_rounding_blocks_before_debit (test_v16.V16Tests.test_missing_stock_rounding_blocks_before_debit) ... ok
+test_new_display_values_are_not_approved_sell_prices (test_v16.V16Tests.test_new_display_values_are_not_approved_sell_prices) ... ok
+test_no_loan_without_real_income (test_v16.V16Tests.test_no_loan_without_real_income) ... ok
+test_p2p_stock_hours_minimum_and_rollback (test_v16.V16Tests.test_p2p_stock_hours_minimum_and_rollback) ... ok
+test_populated_v15_business_table_rebuild_preserves_child_references (test_v16.V16Tests.test_populated_v15_business_table_rebuild_preserves_child_references) ... ok
+test_repurchase_after_state_sale_retains_historical_object (test_v16.V16Tests.test_repurchase_after_state_sale_retains_historical_object) ... ok
+test_restart_does_not_reset_weights_or_user_data (test_v16.V16Tests.test_restart_does_not_reset_weights_or_user_data) ... ok
+test_royal_preserves_relative_weights_and_price (test_v16.V16Tests.test_royal_preserves_relative_weights_and_price) ... ok
+SHAMA WORLD: persistence ready in 0.132s at C:\Users\����\Documents\ChatGPT\bot\SHAMA_WORLD_V16\shama-world-main\.test-data\7602a27a-ec87-4821-84ef-35f08854b572\recovered.sqlite3; recovery=restored
+test_startup_cloud_recovery_finishes_migration_before_new_catalog (test_v16.V16Tests.test_startup_cloud_recovery_finishes_migration_before_new_catalog) ... ok
+test_state_buyback_ignores_listing_and_repeated_sale (test_v16.V16Tests.test_state_buyback_ignores_listing_and_repeated_sale) ... ok
+test_stock_fee_ceil_and_card_vip_discount (test_v16.V16Tests.test_stock_fee_ceil_and_card_vip_discount) ... ok
+test_stock_supply_fifo_reserved_and_closed_hours (test_v16.V16Tests.test_stock_supply_fifo_reserved_and_closed_hours) ... ok
+test_transfers_fee_exact_amount_limits_and_rolling_window (test_v16.V16Tests.test_transfers_fee_exact_amount_limits_and_rolling_window) ... ok
+
+----------------------------------------------------------------------
+Ran 84 tests in 15.908s
+
+OK

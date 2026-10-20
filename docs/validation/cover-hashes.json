@@ -1,0 +1,37 @@
+[
+  {
+    "case": "starter",
+    "source": "photo_5384560513309680558_y.jpg",
+    "destination": "web/assets/cases/user-starter.jpg",
+    "sha256": "d37bff8861f06328d2e3cb55f5ca5a619c95c6d0ebe3d8433d114292378fe366",
+    "unchanged": true
+  },
+  {
+    "case": "neon",
+    "source": "photo_5384560513309680559_y.jpg",
+    "destination": "web/assets/cases/user-neon.jpg",
+    "sha256": "ca0f92b852f1765c28d7d1ea778eff3b46af94918d0eb9e4f99b0ef5d9b31ff4",
+    "unchanged": true
+  },
+  {
+    "case": "gold",
+    "source": "photo_5384560513309680560_y.jpg",
+    "destination": "web/assets/cases/user-gold.jpg",
+    "sha256": "d3a665a08d2e7d6671deddeeb45aeb55d34c32a2871e5b672479e3fb61258c77",
+    "unchanged": true
+  },
+  {
+    "case": "royal",
+    "source": "photo_5384560513309680561_y.jpg",
+    "destination": "web/assets/cases/user-royal.jpg",
+    "sha256": "8d5393b0760f736422088d7fba348f68ccbd168596fe36261223e6b58b972977",
+    "unchanged": true
+  },
+  {
+    "case": "legendary",
+    "source": "photo_5384560513309680569_y (1).jpg",
+    "destination": "web/assets/cases/user-legendary.jpg",
+    "sha256": "94f56876e4d2a15dda30d72311fd098ba64e0f19a7387d4086c1977da40d2284",
+    "unchanged": true
+  }
+]

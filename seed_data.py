@@ -166,8 +166,16 @@ def seed_content(database_path: str, *, ensure_schema: bool = True, include_new:
         connection.commit()
     seed_extended_content(database_path)
     if include_new:
-        from services.content import seed_game_content
-        seed_game_content(database_path)
+        # Legacy seed runs once. Its old unconditional upserts would otherwise
+        # overwrite new values and drop pools on every process restart.
+        with get_connection(database_path) as c:
+            upgraded = c.execute("SELECT 1 FROM finance_meta WHERE key='catalog_v16'").fetchone()
+        if not upgraded:
+            from services.content_v16 import ensure_legacy_catalog
+            ensure_legacy_catalog(database_path)
+        from services.content_v16 import seed_world,seed_royal_pool
+        seed_world(database_path)
+        seed_royal_pool(database_path)
 
 
 def seed_extended_content(database_path: str) -> None:

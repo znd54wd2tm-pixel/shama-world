@@ -76,6 +76,11 @@ def create_app(*, dev_mode: bool = False) -> FastAPI:
             settings,
             required=should_require_recovery(settings, database_existed),
         )
+        if recovery.status == 'restored':
+            # Recovery also restores the older schema-version markers. Finish
+            # migrations before adding V16 items, so a later restart cannot
+            # mistake new, unapproved buyback prices for legacy values.
+            init_db(settings.database_path)
         # An older cloud snapshot has no v15 catalog. Restore first, then add
         # missing content against the recovered ids without touching owners.
         seed_content(settings.database_path, ensure_schema=False)
@@ -92,6 +97,8 @@ def create_app(*, dev_mode: bool = False) -> FastAPI:
         telegram_application = None
         stop_polling_fn = None
         bot_task: asyncio.Task[None] | None = None
+        from services.finance_jobs import run as run_finance_jobs
+        finance_task=asyncio.create_task(run_finance_jobs(settings.database_path,application),name='virtual-finance-maintenance')
 
         async def start_telegram_in_background() -> None:
             """Keep an unavailable Telegram transport from blocking HTTP readiness."""
@@ -122,6 +129,8 @@ def create_app(*, dev_mode: bool = False) -> FastAPI:
             queue_snapshot_sync(application)
             yield
         finally:
+            finance_task.cancel()
+            await asyncio.gather(finance_task,return_exceptions=True)
             await flush_snapshot_sync(application)
             if telegram_application is not None:
                 try:

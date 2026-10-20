@@ -14,6 +14,22 @@ def register_game_routes(app, current_user):
     def path():
         return get_settings(require_bot=False,require_webapp=False).database_path
 
+    @app.get('/api/finance')
+    def finance_state(user: dict = Depends(current_user)):
+        from services.finance import state
+        return state(path(),user['id'])
+
+    @app.post('/api/finance/{action}')
+    def finance_action(action: str,payload: dict = Body(default={}),user: dict = Depends(current_user),request_id: str | None = Header(None,alias='X-Game-Request-Id')):
+        from services.finance import mutate
+        return mutate(path(),user['id'],action,payload,request_id)
+
+    @app.get('/api/collection')
+    def collection(user: dict = Depends(current_user)):
+        from services.item_view import present
+        with get_connection(path()) as c:
+            return {'items':[present(r) for r in c.execute("SELECT i.*,COALESCE(inv.quantity,0) AS quantity FROM catalogue_membership m JOIN items i ON i.id=m.item_id LEFT JOIN inventory inv ON inv.item_id=i.id AND inv.user_id=? WHERE m.collection='collection' ORDER BY m.position",(user['id'],))]}
+
     @app.get("/api/settings")
     def settings(user: dict = Depends(current_user)):
         with get_connection(path()) as c:
@@ -54,6 +70,7 @@ def register_game_routes(app, current_user):
 
     @app.post("/api/openings/results/{action}")
     def results(action: str,payload: dict = Body(...),user: dict = Depends(current_user),request_id: str | None = Header(None,alias="X-Game-Request-Id")):
+        if not request_id:raise HTTPException(400,'Требуется идентификатор операции')
         return result_action(path(),user["id"],action,payload.get("result_ids"),request_id)
 
     @app.get("/api/businesses")
@@ -62,6 +79,7 @@ def register_game_routes(app, current_user):
 
     @app.post("/api/businesses/{enterprise_id}/{action}")
     def business(enterprise_id: int,action: str,payload: dict = Body(default={}),user: dict = Depends(current_user),request_id: str | None = Header(None,alias="X-Game-Request-Id")):
+        if not request_id:raise HTTPException(400,'Требуется идентификатор операции')
         return business_action(path(),user["id"],enterprise_id,action,payload,request_id)
 
     @app.get("/api/market/listings")
@@ -70,4 +88,5 @@ def register_game_routes(app, current_user):
 
     @app.post("/api/market/listings/{action}")
     def listings_action(action: str,payload: dict = Body(...),user: dict = Depends(current_user),request_id: str | None = Header(None,alias="X-Game-Request-Id")):
+        if not request_id:raise HTTPException(400,'Требуется идентификатор операции')
         return player_market_action(path(),user["id"],action,payload,request_id)

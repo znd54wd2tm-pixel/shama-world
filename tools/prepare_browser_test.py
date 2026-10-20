@@ -18,4 +18,6 @@ with get_connection(path) as c:
     c.execute('UPDATE users SET balance=1000000 WHERE id=?',(user['id'],))
     c.execute('INSERT INTO user_settings(user_id,fast_open) VALUES (?,0) ON CONFLICT(user_id) DO UPDATE SET fast_open=0',(user['id'],))
     award_enterprise(c,user['id'],1)
+    item=c.execute("SELECT id FROM items WHERE asset_key='football'").fetchone()[0]
+    c.execute('INSERT OR IGNORE INTO inventory(user_id,item_id,quantity) VALUES (?,?,1)',(user['id'],item))
 print('Local fixture ready at .test-data/browser.sqlite3')
